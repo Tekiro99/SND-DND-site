@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Локальная игра D&D</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8b5d0, #b5d9f8);
+            color: #333;
+            animation: fadeIn 1s ease;
+        }
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            padding-top: 40px;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: rgba(255,255,255,0.8);
+            padding: 20px 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+        section {
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 0.8s forwards ease;
+        }
+        section:nth-of-type(2) { animation-delay: 0.2s; }
+        section:nth-of-type(3) { animation-delay: 0.4s; }
+        img {
+            display: block;
+            max-width: 100%;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Добро пожаловать в D&D!</h1>
+        <section>
+            <h2>О игре</h2>
+            <p>Этот шаблон посвящён локальной игре в Dungeons & Dragons. Здесь вскоре появятся подробные правила и описания, которые помогут погрузиться в увлекательный мир приключений.</p>
+        </section>
+        <section>
+            <h2>Правила</h2>
+            <p>Раздел с правилами будет дополнен в будущем. Пока что вы можете наслаждаться атмосферой и готовиться к захватывающим игровым сессиям.</p>
+        </section>
+        <section>
+            <h2>Типы карточек</h2>
+            <img src="static/card_types.png" alt="Типы карточек">
+        </section>
+    </div>
+</body>
+</html>
