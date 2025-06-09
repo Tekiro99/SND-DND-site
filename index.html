@@ -8,7 +8,9 @@
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #f8b5d0, #b5d9f8);
+            background: url('static/background.png') no-repeat center center fixed, linear-gradient(135deg, #f8b5d0, #b5d9f8);
+            background-size: cover;
+            background-blend-mode: overlay;
             color: #333;
             animation: fadeIn 1s ease;
         }
@@ -17,14 +19,15 @@
             text-align: center;
             padding-top: 40px;
             margin-bottom: 20px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
         .container {
             max-width: 800px;
             margin: auto;
-            background: rgba(255,255,255,0.8);
+            background: rgba(255,255,255,0.85);
             padding: 20px 40px;
             border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            box-shadow: 0 0 25px rgba(0,0,0,0.3);
         }
         section {
             margin-bottom: 30px;
@@ -41,11 +44,30 @@
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
+        .music-control {
+            display: block;
+            margin: 10px auto 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: #333;
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+        }
         @keyframes slideUp {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; padding-top: 20px; }
+            .container { padding: 15px 20px; }
         }
     </style>
 </head>
@@ -64,6 +86,26 @@
             <h2>Типы карточек</h2>
             <img src="static/card_types.png" alt="Типы карточек">
         </section>
+        <section>
+            <h2>Классы</h2>
+            <p>В игре будет возможность собрать свой уникальный класс</p>
+            <img src="static/classes.png" alt="Классы">
+        </section>
+        <button id="music-btn" class="music-control">Выключить музыку</button>
+        <audio id="bg-music" src="static/backmusic.mp3" autoplay loop></audio>
     </div>
+    <script>
+        const btn = document.getElementById('music-btn');
+        const audio = document.getElementById('bg-music');
+        btn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                btn.textContent = 'Выключить музыку';
+            } else {
+                audio.pause();
+                btn.textContent = 'Включить музыку';
+            }
+        });
+    </script>
 </body>
 </html>
