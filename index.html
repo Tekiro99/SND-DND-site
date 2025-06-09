@@ -12,6 +12,7 @@
             background-size: cover;
             color: #333;
             animation: fadeIn 1s ease;
+            font-size: 16px;
         }
         .hero {
             display: flex;
@@ -109,6 +110,23 @@
         .icon-item:hover .tooltip {
             opacity: 1;
         }
+        /* calendar styles */
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .calendar th,
+        .calendar td {
+            padding: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .calendar td.selected {
+            background: #5cb85c;
+            color: #fff;
+            border-radius: 4px;
+        }
         @keyframes slideUp {
             to {
                 opacity: 1;
@@ -120,8 +138,15 @@
             to { opacity: 1; }
         }
         @media (max-width: 600px) {
-            h1 { font-size: 2em; }
-            .container { padding: 15px 20px; }
+            body { font-size: 14px; }
+            h1 { font-size: 1.8em; }
+            .hero { height: 30vh; padding: 0 10px; }
+            .container {
+                padding: 10px;
+                width: 95%;
+            }
+            .icon-wrapper { flex-wrap: wrap; }
+            .icon-item img { width: 50px; }
         }
     </style>
 </head>
@@ -175,18 +200,30 @@
             <h2>COMING SOON</h2>
 
         </section>
-        
+
+        <section id="feedback">
+            <h2>Обратная связь</h2>
+            <input type="text" id="player-name" placeholder="Ваше имя" style="width:100%;padding:5px;margin-bottom:10px;">
+            <div id="calendar-container"></div>
+            <button id="submit-feedback" style="margin-top:10px;">Жду игру</button>
+            <p id="feedback-status"></p>
+        </section>
+
         <audio id="bg-music" src="static/backmusic.mp3" autoplay loop></audio>
     </div>
     <script>
         const btn = document.getElementById('music-btn');
         const audio = document.getElementById('bg-music');
+        const calendarContainer = document.getElementById('calendar-container');
+        const selectedDates = new Set();
+        const scriptURL = 'YOUR_SCRIPT_URL_HERE'; // замените на URL веб‑приложения Apps Script
 
         window.addEventListener('load', () => {
             audio.autoplay = true;
             audio.load();
             audio.play().catch(() => {});
             btn.textContent = '🔊';
+            buildCalendar();
         });
 
         btn.addEventListener('click', () => {
@@ -196,6 +233,79 @@
             } else {
                 audio.pause();
                 btn.textContent = '🔇';
+            }
+        });
+
+        function buildCalendar() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            const lastDate = new Date(year, month + 1, 0).getDate();
+            const weekdays = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+
+            let html = '<table class="calendar"><thead><tr>';
+            weekdays.forEach(d => html += `<th>${d}</th>`);
+            html += '</tr></thead><tbody><tr>';
+
+            let dayOfWeek = (firstDay + 6) % 7; // shift to Monday start
+            for (let i = 0; i < dayOfWeek; i++) {
+                html += '<td></td>';
+            }
+            for (let date = 1; date <= lastDate; date++) {
+                const fullDate = `${year}-${String(month+1).padStart(2,'0')}-${String(date).padStart(2,'0')}`;
+                html += `<td data-date="${fullDate}">${date}</td>`;
+                dayOfWeek++;
+                if (dayOfWeek === 7 && date !== lastDate) {
+                    html += '</tr><tr>';
+                    dayOfWeek = 0;
+                }
+            }
+            while (dayOfWeek > 0 && dayOfWeek < 7) {
+                html += '<td></td>';
+                dayOfWeek++;
+                if (dayOfWeek === 7) break;
+            }
+            html += '</tr></tbody></table>';
+            calendarContainer.innerHTML = html;
+            calendarContainer.querySelectorAll('td[data-date]').forEach(td => {
+                td.addEventListener('click', () => {
+                    const date = td.getAttribute('data-date');
+                    if (selectedDates.has(date)) {
+                        selectedDates.delete(date);
+                        td.classList.remove('selected');
+                    } else {
+                        selectedDates.add(date);
+                        td.classList.add('selected');
+                    }
+                });
+            });
+        }
+
+        document.getElementById('submit-feedback').addEventListener('click', async () => {
+            const name = document.getElementById('player-name').value.trim();
+            if (!name || selectedDates.size === 0) {
+                alert('Укажите имя и отметьте даты.');
+                return;
+            }
+            const dates = Array.from(selectedDates).join(', ');
+            const status = document.getElementById('feedback-status');
+            status.textContent = 'Отправка...';
+            const data = new FormData();
+            data.append('name', name);
+            data.append('dates', dates);
+            try {
+                const res = await fetch(scriptURL, { method: 'POST', body: data });
+                if (res.ok) {
+                    status.textContent = 'Данные отправлены!';
+                    selectedDates.clear();
+                    calendarContainer.querySelectorAll('td.selected').forEach(td => td.classList.remove('selected'));
+                    document.getElementById('player-name').value = '';
+                } else {
+                    status.textContent = 'Ошибка отправки.';
+                }
+            } catch (e) {
+                status.textContent = 'Ошибка сети.';
             }
         });
 
