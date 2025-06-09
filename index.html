@@ -90,11 +90,14 @@
             position: fixed;
             top: 20px;
             right: 70px;
-            padding: 8px 12px;
-            background: #333;
+            padding: 12px 20px;
+            font-size: 1.1em;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(45deg, #612897, #c070ff);
             color: #fff;
-            border: none;
-            border-radius: 8px;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.6);
             cursor: pointer;
         }
         .icon-wrapper {
@@ -109,11 +112,11 @@
             transition: transform 0.3s;
         }
         .icon-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1.2);
         }
         .icon-item .tooltip {
             position: absolute;
-            bottom: -30px;
+            bottom: -20px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0,0,0,0.7);
@@ -124,55 +127,12 @@
             opacity: 0;
             transition: opacity 0.3s;
             white-space: nowrap;
+            text-align: center;
         }
         .icon-item:hover .tooltip {
             opacity: 1;
         }
-        .card-container {
-            position: relative;
-            display: inline-block;
-        }
-        .hotspot {
-            position: absolute;
-            width: 20%;
-            height: 20%;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        .hotspot::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .hotspot:hover::after,
-        .hotspot.show::after {
-            opacity: 1;
-        }
-        .hotspot .hint {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            background: rgba(0,0,0,0.8);
-            color: #fff;
-            padding: 4px 8px;
-            border-radius: 4px;
-            white-space: nowrap;
-            transition: transform 0.3s;
-            pointer-events: none;
-        }
-        .hotspot:hover .hint,
-        .hotspot.show .hint {
-            transform: translate(-50%, -50%) scale(1);
-        }
+
         /* calendar styles */
         .calendar {
             width: 100%;
@@ -283,18 +243,7 @@
         <section>
             <h2>Карточки</h2>
             <p>Артефакты и способности будут представлены в виде игральных карт</p>
-            <div class="card-container">
-                <img src="static/card_types.png" alt="Типы карточек">
-                <div class="hotspot hot-class" style="top:15%; left:20%;">
-                    <span class="hint">Класс карты</span>
-                </div>
-                <div class="hotspot hot-action" style="top:50%; left:20%;">
-                    <span class="hint">Тип действия</span>
-                </div>
-                <div class="hotspot hot-level" style="top:50%; left:80%;">
-                    <span class="hint">Уровень способности</span>
-                </div>
-            </div>
+            <img src="static/card_types.png" alt="Типы карточек">
 
         </section>
         <section>
@@ -467,11 +416,6 @@
             }
         });
 
-        document.querySelectorAll('.hotspot').forEach(h => {
-            h.addEventListener('click', () => {
-                h.classList.toggle('show');
-            });
-        });
 
     </script>
 </body>
