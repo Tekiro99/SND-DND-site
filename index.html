@@ -370,11 +370,15 @@
             const dates = Array.from(selectedDates).join(', ');
             const status = document.getElementById('feedback-status');
             status.textContent = 'Отправка...';
-            const data = new FormData();
+            const data = new URLSearchParams();
             data.append('name', name);
             data.append('dates', dates);
             try {
-                const res = await fetch(scriptURL, { method: 'POST', body: data });
+                const res = await fetch(scriptURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: data
+                });
                 if (res.ok) {
                     status.textContent = 'Данные отправлены!';
                     selectedDates.clear();
