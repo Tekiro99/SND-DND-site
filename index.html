@@ -26,6 +26,9 @@
             color: #fff;
             text-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
+        h2 {
+            text-align: center;
+        }
         .container {
             max-width: 800px;
             margin: auto;
@@ -66,6 +69,60 @@
             justify-content: center;
             align-items: center;
         }
+        .neon-btn {
+            padding: 10px 20px;
+            border: 2px solid #0ff;
+            background: transparent;
+            color: #0ff;
+            border-radius: 8px;
+            text-shadow: 0 0 5px #0ff;
+            cursor: pointer;
+            transition: box-shadow 0.3s;
+        }
+        .neon-btn:hover {
+            box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        .overlay img {
+            max-width: 90%;
+            margin-bottom: 20px;
+        }
+        .icon-wrapper {
+            display: flex;
+            gap: 20px;
+        }
+        .icon-item {
+            position: relative;
+        }
+        .icon-item .tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        .icon-item:hover .tooltip {
+            opacity: 1;
+        }
         @keyframes slideUp {
             to {
                 opacity: 1;
@@ -98,14 +155,43 @@
         </section>
         <section>
             <h2>Типы карточек</h2>
-            <img src="static/card_types.png" alt="Типы карточек">
-            <p>Способности и артефакты будут представлены в виде игровых карточек со всей необходимой информацией</p>
+            <button class="neon-btn" data-target="cards-overlay">Карточки</button>
+            <p>Артефакты и способности представлены в виде игральных карт</p>
         </section>
         <section>
             <h2>Классы</h2>
+            <button class="neon-btn" data-target="classes-overlay">Классы</button>
             <p>В игре будет возможность собрать свой уникальный класс</p>
-            <img src="static/classes.png" alt="Классы">
         </section>
+        <section>
+            <h2>Значения иконок</h2>
+            <button class="neon-btn" data-target="icons-overlay">Значения иконок</button>
+        </section>
+        <div id="cards-overlay" class="overlay">
+            <img src="static/card_types.png" alt="Типы карточек">
+            <button class="close-btn neon-btn">Закрыть</button>
+        </div>
+        <div id="classes-overlay" class="overlay">
+            <img src="static/classes.png" alt="Классы">
+            <button class="close-btn neon-btn">Закрыть</button>
+        </div>
+        <div id="icons-overlay" class="overlay">
+            <div class="icon-wrapper">
+                <div class="icon-item">
+                    <img src="static/Действие.png" alt="Действие">
+                    <span class="tooltip">Основное действие</span>
+                </div>
+                <div class="icon-item">
+                    <img src="static/ДопДействие.png" alt="ДопДействие">
+                    <span class="tooltip">Дополнительное действие</span>
+                </div>
+                <div class="icon-item">
+                    <img src="static/Реакция.png" alt="Реакция">
+                    <span class="tooltip">Пассивно срабатывающее действие при определенных условиях</span>
+                </div>
+            </div>
+            <button class="close-btn neon-btn">Закрыть</button>
+        </div>
         <audio id="bg-music" src="static/backmusic.mp3" autoplay loop></audio>
     </div>
     <script>
@@ -113,6 +199,8 @@
         const audio = document.getElementById('bg-music');
 
         window.addEventListener('load', () => {
+            audio.autoplay = true;
+            audio.load();
             audio.play().catch(() => {});
             btn.textContent = '🔊';
         });
@@ -125,6 +213,18 @@
                 audio.pause();
                 btn.textContent = '🔇';
             }
+        });
+
+        document.querySelectorAll('.neon-btn[data-target]').forEach(button => {
+            button.addEventListener('click', () => {
+                const target = document.getElementById(button.dataset.target);
+                if (target) target.style.display = 'flex';
+            });
+        });
+        document.querySelectorAll('.close-btn').forEach(btnClose => {
+            btnClose.addEventListener('click', () => {
+                btnClose.parentElement.style.display = 'none';
+            });
         });
     </script>
 </body>
