@@ -8,17 +8,21 @@
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: url('static/background.png') no-repeat center center fixed, linear-gradient(135deg, #f8b5d0, #b5d9f8);
+            background: url('static/background.png') no-repeat center center fixed;
             background-size: cover;
-            background-blend-mode: overlay;
             color: #333;
             animation: fadeIn 1s ease;
+        }
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60vh;
         }
         h1 {
             font-size: 2.5em;
             text-align: center;
-            padding-top: 40px;
-            margin-bottom: 20px;
+            margin: 0;
             text-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
         .container {
@@ -45,15 +49,20 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         .music-control {
-            display: block;
-            margin: 10px auto 20px;
-            padding: 10px 20px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
             border: none;
-            border-radius: 8px;
+            border-radius: 50%;
             background: #333;
             color: #fff;
-            font-size: 1em;
+            font-size: 0.9em;
             cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         @keyframes slideUp {
             to {
@@ -66,14 +75,17 @@
             to { opacity: 1; }
         }
         @media (max-width: 600px) {
-            h1 { font-size: 2em; padding-top: 20px; }
+            h1 { font-size: 2em; }
             .container { padding: 15px 20px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <button id="music-btn" class="music-control">🔊</button>
+    <div class="hero">
         <h1>Добро пожаловать в D&D!</h1>
+    </div>
+    <div class="container">
         <section>
             <h2>О игре</h2>
             <p>Этот шаблон посвящён локальной игре в Dungeons & Dragons. Здесь вскоре появятся подробные правила и описания, которые помогут погрузиться в увлекательный мир приключений.</p>
@@ -85,25 +97,30 @@
         <section>
             <h2>Типы карточек</h2>
             <img src="static/card_types.png" alt="Типы карточек">
+            <p>Способности и артефакты будут представлены в виде игровых карточек со всей необходимой информацией</p>
         </section>
         <section>
             <h2>Классы</h2>
             <p>В игре будет возможность собрать свой уникальный класс</p>
             <img src="static/classes.png" alt="Классы">
         </section>
-        <button id="music-btn" class="music-control">Выключить музыку</button>
         <audio id="bg-music" src="static/backmusic.mp3" autoplay loop></audio>
     </div>
     <script>
         const btn = document.getElementById('music-btn');
         const audio = document.getElementById('bg-music');
+
+        window.addEventListener('load', () => {
+            audio.play();
+        });
+
         btn.addEventListener('click', () => {
             if (audio.paused) {
                 audio.play();
-                btn.textContent = 'Выключить музыку';
+                btn.textContent = '🔊';
             } else {
                 audio.pause();
-                btn.textContent = 'Включить музыку';
+                btn.textContent = '🔇';
             }
         });
     </script>
