@@ -26,10 +26,13 @@
             color: #fff;
             text-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
+        h2 {
+            text-align: center;
+        }
         .container {
             max-width: 800px;
             margin: auto;
-            background: rgba(0,0,0,0.6);
+            background: rgba(50,50,50,0.6);
             color: #fff;
             padding: 20px 40px;
             border-radius: 12px;
@@ -66,6 +69,31 @@
             justify-content: center;
             align-items: center;
         }
+        .icon-wrapper {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .icon-item {
+            position: relative;
+        }
+        .icon-item .tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        .icon-item:hover .tooltip {
+            opacity: 1;
+        }
         @keyframes slideUp {
             to {
                 opacity: 1;
@@ -99,12 +127,29 @@
         <section>
             <h2>Типы карточек</h2>
             <img src="static/card_types.png" alt="Типы карточек">
-            <p>Способности и артефакты будут представлены в виде игровых карточек со всей необходимой информацией</p>
+            <p>Артефакты и способности представлены в виде игральных карт</p>
         </section>
         <section>
             <h2>Классы</h2>
             <p>В игре будет возможность собрать свой уникальный класс</p>
             <img src="static/classes.png" alt="Классы">
+        </section>
+        <section>
+            <h2>Значения иконок</h2>
+            <div class="icon-wrapper">
+                <div class="icon-item">
+                    <img src="static/Действие.png" alt="Действие">
+                    <span class="tooltip">Основное действие</span>
+                </div>
+                <div class="icon-item">
+                    <img src="static/ДопДействие.png" alt="ДопДействие">
+                    <span class="tooltip">Дополнительное действие</span>
+                </div>
+                <div class="icon-item">
+                    <img src="static/Реакция.png" alt="Реакция">
+                    <span class="tooltip">Пассивно срабатывающее действие при определенных условиях</span>
+                </div>
+            </div>
         </section>
         <audio id="bg-music" src="static/backmusic.mp3" autoplay loop></audio>
     </div>
@@ -113,6 +158,8 @@
         const audio = document.getElementById('bg-music');
 
         window.addEventListener('load', () => {
+            audio.autoplay = true;
+            audio.load();
             audio.play().catch(() => {});
             btn.textContent = '🔊';
         });
@@ -126,6 +173,7 @@
                 btn.textContent = '🔇';
             }
         });
+
     </script>
 </body>
 </html>
