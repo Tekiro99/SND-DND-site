@@ -10,7 +10,11 @@
             font-family: 'Arial', sans-serif;
             background: url('static/background.png') no-repeat center center fixed;
             background-size: cover;
+<<<<<<< HEAD
             color: #00eefb7d;
+=======
+            color: #000000;
+>>>>>>> codex/implement-ui-changes-and-music-auto-play
             animation: fadeIn 1s ease;
         }
         .hero {
@@ -23,8 +27,8 @@
             font-size: 2.5em;
             text-align: center;
             margin: 0;
-            color: #fff;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            color: #ffffff;
+            text-shadow: 0 4px 10px rgba(255, 255, 255, 0.4);
         }
         h2 {
             text-align: center;
@@ -32,8 +36,13 @@
         .container {
             max-width: 800px;
             margin: auto;
+<<<<<<< HEAD
             background: rgba(0,0,0,0.6);
             color: #fff;
+=======
+            background: rgba(226, 255, 255, 0.6);
+            color: #000000;
+>>>>>>> codex/implement-ui-changes-and-music-auto-play
             padding: 20px 40px;
             border-radius: 12px;
             box-shadow: 0 0 25px rgba(0,0,0,0.3);
@@ -154,6 +163,7 @@
             <p>Раздел с правилами будет дополнен в будущем. Пока что вы можете наслаждаться атмосферой и готовиться к захватывающим игровым сессиям.</p>
         </section>
         <section>
+<<<<<<< HEAD
             <h2>Типы карточек</h2>
             <button class="neon-btn" data-target="cards-overlay">Карточки</button>
             <p>Артефакты и способности представлены в виде игральных карт</p>
@@ -162,6 +172,12 @@
             <h2>Классы</h2>
             <button class="neon-btn" data-target="classes-overlay">Классы</button>
             <p>В игре будет возможность собрать свой уникальный класс</p>
+=======
+            <h2>Карточки</h2>
+            <p>Артефакты и способности представлены в виде игральных карт</p>
+            <img src="static/card_types.png" alt="Типы карточек">
+
+>>>>>>> codex/implement-ui-changes-and-music-auto-play
         </section>
         <section>
             <h2>Значения иконок</h2>
@@ -182,16 +198,27 @@
                     <span class="tooltip">Основное действие</span>
                 </div>
                 <div class="icon-item">
-                    <img src="static/ДопДействие.png" alt="ДопДействие">
-                    <span class="tooltip">Дополнительное действие</span>
-                </div>
-                <div class="icon-item">
                     <img src="static/Реакция.png" alt="Реакция">
                     <span class="tooltip">Пассивно срабатывающее действие при определенных условиях</span>
                 </div>
+                <div class="icon-item">
+                    <img src="static/ДопДействие.png" alt="ДопДействие">
+                    <span class="tooltip">Дополнительное действие</span>
+                </div>
+                
             </div>
+<<<<<<< HEAD
             <button class="close-btn neon-btn">Закрыть</button>
         </div>
+=======
+        </section>
+        <section>
+            <h2>Классы</h2>
+            <p>В игре будет возможность собрать свой уникальный класс</p>
+            <img src="static/classes.png" alt="Классы">
+        </section>
+
+>>>>>>> codex/implement-ui-changes-and-music-auto-play
         <audio id="bg-music" src="static/backmusic.mp3" autoplay loop></audio>
     </div>
     <script>
