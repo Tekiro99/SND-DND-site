@@ -10,7 +10,7 @@
             font-family: 'Arial', sans-serif;
             background: url('static/background.png') no-repeat center center fixed;
             background-size: cover;
-            color: #333;
+            color: #00eefb7d;
             animation: fadeIn 1s ease;
         }
         .hero {
@@ -32,7 +32,7 @@
         .container {
             max-width: 800px;
             margin: auto;
-            background: rgba(50,50,50,0.6);
+            background: rgba(0,0,0,0.6);
             color: #fff;
             padding: 20px 40px;
             border-radius: 12px;
@@ -69,10 +69,39 @@
             justify-content: center;
             align-items: center;
         }
+        .neon-btn {
+            padding: 10px 20px;
+            border: 2px solid #0ff;
+            background: transparent;
+            color: #0ff;
+            border-radius: 8px;
+            text-shadow: 0 0 5px #0ff;
+            cursor: pointer;
+            transition: box-shadow 0.3s;
+        }
+        .neon-btn:hover {
+            box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        .overlay img {
+            max-width: 90%;
+            margin-bottom: 20px;
+        }
         .icon-wrapper {
             display: flex;
             gap: 20px;
-            justify-content: center;
         }
         .icon-item {
             position: relative;
@@ -126,16 +155,27 @@
         </section>
         <section>
             <h2>Типы карточек</h2>
-            <img src="static/card_types.png" alt="Типы карточек">
+            <button class="neon-btn" data-target="cards-overlay">Карточки</button>
             <p>Артефакты и способности представлены в виде игральных карт</p>
         </section>
         <section>
             <h2>Классы</h2>
+            <button class="neon-btn" data-target="classes-overlay">Классы</button>
             <p>В игре будет возможность собрать свой уникальный класс</p>
-            <img src="static/classes.png" alt="Классы">
         </section>
         <section>
             <h2>Значения иконок</h2>
+            <button class="neon-btn" data-target="icons-overlay">Значения иконок</button>
+        </section>
+        <div id="cards-overlay" class="overlay">
+            <img src="static/card_types.png" alt="Типы карточек">
+            <button class="close-btn neon-btn">Закрыть</button>
+        </div>
+        <div id="classes-overlay" class="overlay">
+            <img src="static/classes.png" alt="Классы">
+            <button class="close-btn neon-btn">Закрыть</button>
+        </div>
+        <div id="icons-overlay" class="overlay">
             <div class="icon-wrapper">
                 <div class="icon-item">
                     <img src="static/Действие.png" alt="Действие">
@@ -150,7 +190,8 @@
                     <span class="tooltip">Пассивно срабатывающее действие при определенных условиях</span>
                 </div>
             </div>
-        </section>
+            <button class="close-btn neon-btn">Закрыть</button>
+        </div>
         <audio id="bg-music" src="static/backmusic.mp3" autoplay loop></audio>
     </div>
     <script>
@@ -174,6 +215,17 @@
             }
         });
 
+        document.querySelectorAll('.neon-btn[data-target]').forEach(button => {
+            button.addEventListener('click', () => {
+                const target = document.getElementById(button.dataset.target);
+                if (target) target.style.display = 'flex';
+            });
+        });
+        document.querySelectorAll('.close-btn').forEach(btnClose => {
+            btnClose.addEventListener('click', () => {
+                btnClose.parentElement.style.display = 'none';
+            });
+        });
     </script>
 </body>
 </html>
