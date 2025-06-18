@@ -11,12 +11,7 @@
     
     <style>
         /* --- Глобальные стили и фон --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             background-image: url('static/background.png');
             background-size: cover;
@@ -38,7 +33,6 @@
             max-width: 500px; 
             margin-bottom: 30px;
         }
-
         .site-header img {
             width: 100%;
             height: auto;
@@ -58,13 +52,7 @@
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
             backdrop-filter: blur(3px);
         }
-
-        .prologue h1, .prologue h2 {
-            font-family: 'Cinzel Decorative', cursive;
-            text-align: center;
-            text-shadow: 0 0 8px #f9d77e;
-        }
-
+        .prologue h1, .prologue h2 { font-family: 'Cinzel Decorative', cursive; text-align: center; text-shadow: 0 0 8px #f9d77e; }
         .prologue h1 { font-size: 2.5rem; margin-bottom: 5px; }
         .prologue h2 { font-size: 1.5rem; font-style: italic; color: #c8a45c; margin-bottom: 20px; }
         .prologue p { font-size: 1.1rem; line-height: 1.7; text-align: justify; margin-bottom: 20px; }
@@ -81,11 +69,14 @@
             width: 100%;
         }
 
+        /* --- Контейнер карты --- */
         .card-container {
+            position: relative; /* Нужно для позиционирования сияния */
             perspective: 1500px;
             margin-bottom: 25px;
         }
 
+        /* --- Сама карта (размер для мобильных) --- */
         .card {
             width: 280px;
             height: 400px;
@@ -94,12 +85,10 @@
             transform-style: preserve-3d;
             transition: transform 1.5s, box-shadow 0.3s;
         }
-
         .card:not(.is-flipped):hover {
             transform: translateY(-15px) scale(1.05);
             box-shadow: 0 15px 40px rgba(255, 223, 150, 0.3);
         }
-
         .card.is-flipped { transform: rotateY(180deg); }
 
         .card-face {
@@ -114,9 +103,35 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             border: 2px solid #c8a45c;
         }
-
         .card-back { background-image: url('static/backcard.jpg'); }
         .card-front { background-color: #1a1a1a; transform: rotateY(180deg); }
+
+        /* --- НОВЫЙ ЭФФЕКТ: Сияние за картой --- */
+        .card-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255, 223, 150, 0.6) 0%, rgba(255, 223, 150, 0) 70%);
+            transform: translate(-50%, -50%) scale(0.5);
+            z-index: -1; /* Помещает сияние за карту */
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none; /* Чтобы не мешало кликам */
+        }
+
+        /* Класс, который запускает анимацию сияния */
+        .card-container.glow-active .card-glow {
+            animation: radiate-glow 1.5s ease-out forwards;
+        }
+
+        /* Анимация сияния */
+        @keyframes radiate-glow {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0; }
+        }
 
         .character-name {
             font-family: 'Cinzel Decorative', cursive;
@@ -129,10 +144,9 @@
             text-align: center;
             height: 45px;
         }
-
         .character-name.visible { opacity: 1; transform: translateY(0); }
 
-        /* --- НОВЫЙ БЛОК: Футер с призывом к действию --- */
+        /* --- Футер --- */
         .site-footer {
             background-color: rgba(10, 5, 0, 0.6);
             border: 1px solid #6e5831;
@@ -145,33 +159,20 @@
             backdrop-filter: blur(3px);
             text-align: center;
         }
-        
-        .site-footer h3 {
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 1.8rem;
-            color: #e4b967;
-            text-shadow: 0 0 5px #f9d77e;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
-
-        .site-footer p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-
-        .site-footer .final-words {
-            font-family: 'Cinzel Decorative', cursive;
-            font-style: italic;
-            font-size: 1.2rem;
-            margin-top: 25px;
-            color: #f0e6d2;
-            opacity: 0.9;
-        }
-
+        .site-footer h3 { font-family: 'Cinzel Decorative', cursive; font-size: 1.8rem; color: #e4b967; text-shadow: 0 0 5px #f9d77e; text-transform: uppercase; margin-bottom: 20px; }
+        .site-footer p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 15px; }
+        .site-footer .final-words { font-family: 'Cinzel Decorative', cursive; font-style: italic; font-size: 1.2rem; margin-top: 25px; color: #f0e6d2; opacity: 0.9; }
 
         /* --- АДАПТИВНОСТЬ --- */
+
+        /* == ПАРАМЕТР ДЛЯ НАСТРОЙКИ РАЗМЕРА КАРТЫ НА ПК == */
+        @media (min-width: 769px) {
+            .card {
+                width: 330px;  /* <-- Вот этот параметр */
+                height: 472px; /* <-- И этот (сохраняйте пропорции) */
+            }
+        }
+        
         @media (max-width: 840px) { .prologue, .site-footer { padding: 20px; } }
         
         @media (max-width: 600px) {
@@ -179,7 +180,6 @@
             .prologue h1 { font-size: 2rem; }
             .prologue h2 { font-size: 1.2rem; }
             .prologue p, .prologue li { font-size: 1rem; }
-            .card { width: 240px; height: 343px; }
             .character-name { font-size: 2rem; height: 35px; }
             .site-footer h3 { font-size: 1.5rem; }
             .site-footer p { font-size: 1rem; }
@@ -207,17 +207,18 @@
     </div>
 
     <main class="main-content">
-        <div class="card-container">
+        <div class="card-container" id="card-container">
             <div class="card" id="interactive-card">
                 <div class="card-face card-back"></div>
                 <div class="card-face card-front"></div>
             </div>
+            <!-- Новый элемент для сияния -->
+            <div class="card-glow"></div>
         </div>
         
         <h2 class="character-name" id="character-name"></h2>
     </main>
-
-    <!-- НОВЫЙ БЛОК -->
+    
     <footer class="site-footer">
         <h3>ВНИМАНИЕ: начинается новая кампания D&D.</h3>
         <p>📜 Гейм мастер — Серёжа Грейвинд.</p>
@@ -238,6 +239,7 @@
                 { id: 'Mi',      name: 'Буреверса' }
             ];
 
+            const cardContainer = document.getElementById('card-container'); // Получаем контейнер
             const card = document.getElementById('interactive-card');
             const cardFront = card.querySelector('.card-front');
             const characterNameElement = document.getElementById('character-name');
@@ -257,6 +259,9 @@
                     card.classList.remove('is-flipped');
                     isFlipped = false;
                 } else {
+                    // Запускаем сияние только при раскрытии карты
+                    cardContainer.classList.add('glow-active');
+
                     currentCharacterIndex = (currentCharacterIndex + 1) % characters.length;
                     const nextCharacter = characters[currentCharacterIndex];
 
@@ -268,6 +273,8 @@
 
                     setTimeout(() => {
                         characterNameElement.classList.add('visible');
+                        // Убираем класс сияния после анимации, чтобы она могла сработать снова
+                        cardContainer.classList.remove('glow-active');
                     }, animationDuration);
                 }
 
