@@ -3,420 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Локальная игра D&D</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>Культ Хаоса</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Noto+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    
     <style>
-        body {
+        /* --- Глобальные стили и фон --- */
+        * {
             margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: url('static/background.png') no-repeat center center fixed;
-            background-size: cover;
-            color: #333;
-            animation: fadeIn 1s ease;
-            font-size: 16px;
-        }
-        .hero {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 40vh;
-        }
-        h1 {
-            font-size: 3em;
-            text-align: center;
-            margin: 0;
-            color: #fff;
-            text-shadow: 0 5px 10px rgb(255, 0, 0);
-        }
-        h2 {
-            font-size: 2em;
-            text-align: center;
-            margin: 0;
-            color: #ffffff;
-            text-shadow: 0 8px 10px rgb(214, 172, 172);
-        }
-        
-        p {
-            text-align: center;
-        }
-        H5 {
-            font-size: 3em;
-            text-align: center;
-            margin: 0;
-            color: #3a3692;
-            text-shadow: 0 5px 10px rgba(242, 5, 5, 0.855);
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: rgba(0, 0, 0, 0.789);
-            color: #ffffff;
-            padding: 20px 40px;
-            border-radius: 12px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.3);
-        }
-        section {
-            margin-bottom: 30px;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideUp 0.8s forwards ease;
-        }
-        section:nth-of-type(2) { animation-delay: 0.2s; }
-        section:nth-of-type(3) { animation-delay: 0.4s; }
-        img {
-            display: block;
-            max-width: 100%;
-            margin: 20px auto;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0);
-        }
-        .music-control {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 50%;
-            background: #333;
-            color: #fff;
-            font-size: 0.9em;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .rules-button {
-            position: fixed;
-            top: 20px;
-            right: 70px;
-            padding: 12px 20px;
-            font-size: 1.1em;
-            font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(45deg, #612897, #c070ff);
-            color: #fff;
-            border: 2px solid #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255,255,255,0.6);
-            cursor: pointer;
-        }
-        .icon-wrapper {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-        .icon-item {
-            position: relative;
-        }
-        .icon-item img {
-            transition: transform 0.3s;
-        }
-        .icon-item:hover img {
-            transform: scale(1.2);
-        }
-        .icon-item .tooltip {
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.9em;
-            opacity: 0;
-            transition: opacity 0.3s;
-            white-space: nowrap;
-            text-align: center;
-        }
-        .icon-item:hover .tooltip {
-            opacity: 1;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* calendar styles */
-        .calendar {
+        body {
+            background-image: url('static/background.png');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Noto Serif', serif;
+            color: #f0e6d2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* --- Шапка сайта --- */
+        .site-header {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
+            max-width: 500px; 
+            margin-bottom: 30px;
         }
-        .calendar th,
-        .calendar td {
-            padding: 5px;
+
+        .site-header img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 3px solid #c8a45c;
+            box-shadow: 0 0 25px rgba(249, 215, 126, 0.4), 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* --- Вступительный текст --- */
+        .prologue {
+            background-color: rgba(10, 5, 0, 0.6);
+            border: 1px solid #6e5831;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(3px);
+        }
+
+        .prologue h1, .prologue h2 {
+            font-family: 'Cinzel Decorative', cursive;
             text-align: center;
+            text-shadow: 0 0 8px #f9d77e;
+        }
+
+        .prologue h1 { font-size: 2.5rem; margin-bottom: 5px; }
+        .prologue h2 { font-size: 1.5rem; font-style: italic; color: #c8a45c; margin-bottom: 20px; }
+        .prologue p { font-size: 1.1rem; line-height: 1.7; text-align: justify; margin-bottom: 20px; }
+        .prologue ul { list-style-type: none; padding-left: 0; }
+        .prologue li { font-size: 1.1rem; line-height: 1.8; }
+
+        /* --- Основной контент (карта) --- */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        .card-container {
+            perspective: 1500px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            width: 280px;
+            height: 400px;
+            position: relative;
             cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 1.5s, box-shadow 0.3s;
         }
-        .calendar td.selected {
-            background: #5cb85c;
-            color: #fff;
-            border-radius: 4px;
+
+        .card:not(.is-flipped):hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 223, 150, 0.3);
         }
-        #feedback-button {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            background: #222;
-            color: #39ff14;
-            border: 2px solid #39ff14;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            text-shadow: 0 0 5px #39ff14;
-        }
-        #feedback-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+
+        .card.is-flipped { transform: rotateY(180deg); }
+
+        .card-face {
+            position: absolute;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.85);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            font-family: 'Orbitron', sans-serif;
-            color: #39ff14;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid #c8a45c;
         }
-        #feedback-modal .modal-content {
-            background: #111;
-            padding: 20px;
+
+        .card-back { background-image: url('static/backcard.jpg'); }
+        .card-front { background-color: #1a1a1a; transform: rotateY(180deg); }
+
+        .character-name {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px #f9d77e, 0 0 20px #f9d77e;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            text-align: center;
+            height: 45px;
+        }
+
+        .character-name.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- НОВЫЙ БЛОК: Футер с призывом к действию --- */
+        .site-footer {
+            background-color: rgba(10, 5, 0, 0.6);
+            border: 1px solid #6e5831;
+            padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 0 15px #39ff14;
-            width: 90%;
-            max-width: 400px;
-        }
-        #feedback-modal input {
+            max-width: 800px;
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #39ff14;
-            background: #000;
-            color: #39ff14;
-            border-radius: 4px;
-            font-family: 'Orbitron', sans-serif;
+            margin: 40px auto 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(3px);
+            text-align: center;
         }
-        #feedback-modal button {
-            background: #222;
-            color: #39ff14;
-            border: 2px solid #39ff14;
-            border-radius: 6px;
-            padding: 8px 16px;
-            font-family: 'Orbitron', sans-serif;
-            cursor: pointer;
+        
+        .site-footer h3 {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.8rem;
+            color: #e4b967;
+            text-shadow: 0 0 5px #f9d77e;
+            text-transform: uppercase;
+            margin-bottom: 20px;
         }
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        .site-footer p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+
+        .site-footer .final-words {
+            font-family: 'Cinzel Decorative', cursive;
+            font-style: italic;
+            font-size: 1.2rem;
+            margin-top: 25px;
+            color: #f0e6d2;
+            opacity: 0.9;
         }
+
+
+        /* --- АДАПТИВНОСТЬ --- */
+        @media (max-width: 840px) { .prologue, .site-footer { padding: 20px; } }
+        
         @media (max-width: 600px) {
-            body { font-size: 14px; }
-            h1 { font-size: 1.8em; }
-            .hero { height: 30vh; padding: 0 10px; }
-            .container {
-                padding: 10px;
-                width: 95%;
-            }
-            .icon-wrapper { flex-wrap: wrap; }
-            .icon-item img { width: 50px; }
+            body { padding: 15px; }
+            .prologue h1 { font-size: 2rem; }
+            .prologue h2 { font-size: 1.2rem; }
+            .prologue p, .prologue li { font-size: 1rem; }
+            .card { width: 240px; height: 343px; }
+            .character-name { font-size: 2rem; height: 35px; }
+            .site-footer h3 { font-size: 1.5rem; }
+            .site-footer p { font-size: 1rem; }
+            .site-footer .final-words { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
-    <button id="music-btn" class="music-control">🔊</button>
-    <button id="rules-btn" class="rules-button">Правила</button>
-    <div class="hero">
-        <h1>Добро пожаловать в Подземелье Синдиката!</h1>
+
+    <header class="site-header">
+        <img src="static/top.jpg" alt="Фэнтези мир">
+    </header>
+
+    <div class="prologue">
+        <h1>КУЛЬТ ХАОСА</h1>
+        <h2>Безумие начинается...</h2>
+        <p>Когда звёзды сходятся в зловещем порядке, Грейвинд объявляет игру. Шёпот древних богов слышен даже в забытых землях.<br>
+        Те, кто был изгнан — вернулись. Те, кто забыл, — вспомнили.<br>
+        И те, кто был никем... теперь встали у порога мира, чтобы познать Хаос.</p>
+        <ul>
+            <li>🔸 Каждый из них — проклят, отмечен, избран.</li>
+            <li>🔸 У каждого — своя боль, своя цель, своя тьма.</li>
+            <li>🔸 Вместе они — угроза нервам Серёжи</li>
+        </ul>
     </div>
-    <div class="container">
-        <section>
-            <h2>В скором времени планируется проведение нового сценария "Культ Хаоса"</h2>
-        </section>
-        <section>
-            <H5>ОСНОВНЫЕ НОВОВВЕДЕНИЯ</H5>
-        </section>
-        <section>
-            <h2>Карточки</h2>
-            <p>Артефакты и способности будут представлены в виде игральных карт</p>
-            <img src="static/card_types.png" alt="Типы карточек">
 
-        </section>
-        <section>
-            <h2>Значения иконок</h2>
-            <div class="icon-wrapper">
-                <div class="icon-item">
-                    <img src="static/Действие.png" alt="Действие">
-                    <span class="tooltip">Основное действие</span>
-                </div>
-                <div class="icon-item">
-                    <img src="static/Реакция.png" alt="Реакция">
-                    <span class="tooltip">Пассивное действие<br>при условиях</span>
-                </div>
-                <div class="icon-item">
-                    <img src="static/ДопДействие.png" alt="ДопДействие">
-                    <span class="tooltip">Дополнительное действие</span>
-                </div>
-                
-            </div>
-        </section>
-        <section>
-            <h2>Классы</h2>
-            <p>В игре будет возможность собрать свой уникальный класс</p>
-            <img src="static/classes.png" alt="Классы">
-        </section>
-        <section>
-            <h2>COMING SOON</h2>
-
-        </section>
-
-        <section>
-            <button id="feedback-button">Жду игру</button>
-        </section>
-
-        <div id="feedback-modal">
-            <div class="modal-content">
-                <button id="close-feedback" style="float:right;background:none;border:none;color:#39ff14;font-size:1.5em;cursor:pointer">×</button>
-                <h2>Обратная связь</h2>
-                <input type="text" id="player-name" placeholder="Ваше имя">
-                <div id="calendar-container"></div>
-                <button id="submit-feedback">Отправить</button>
-                <p id="feedback-status"></p>
+    <main class="main-content">
+        <div class="card-container">
+            <div class="card" id="interactive-card">
+                <div class="card-face card-back"></div>
+                <div class="card-face card-front"></div>
             </div>
         </div>
+        
+        <h2 class="character-name" id="character-name"></h2>
+    </main>
 
-        <audio id="bg-music" src="static/backmusic.mp3" autoplay loop></audio>
-    </div>
+    <!-- НОВЫЙ БЛОК -->
+    <footer class="site-footer">
+        <h3>ВНИМАНИЕ: начинается новая кампания D&D.</h3>
+        <p>📜 Гейм мастер — Серёжа Грейвинд.</p>
+        <p>📩 Пиши в личку. Придумаем твоего перса и напишем, какого хрена ты делаешь в культе. Подберём тебе подходящее проклятие.</p>
+        <p class="final-words">Подготовься. Это будет не просто игра. Это будет... перерождение мира.</p>
+    </footer>
+    
     <script>
-        const btn = document.getElementById('music-btn');
-        const audio = document.getElementById('bg-music');
-        const calendarContainer = document.getElementById('calendar-container');
-        const feedbackBtn = document.getElementById('feedback-button');
-        const feedbackModal = document.getElementById('feedback-modal');
-        const closeFeedback = document.getElementById('close-feedback');
-        const rulesBtn = document.getElementById('rules-btn');
-        const selectedDates = new Set();
-        const scriptURL = 'https://script.google.com/macros/s/AKfycby7P2sM6d7aJT1CT3mctcYpG5P0reoHu-F16n5Mm1rSTD3gcBOH1Bx6YoY7MCBZiPezYQ/exec'; // замените на URL веб‑приложения Apps Script
+        document.addEventListener('DOMContentLoaded', () => {
+            const characters = [
+                { id: 'Vagon',   name: 'Тириан' },
+                { id: 'Nara',    name: 'Эйра' },
+                { id: 'Tosha',   name: 'Экко' },
+                { id: 'Yulya',   name: 'Сиэль' },
+                { id: 'Elvina',  name: 'Селария' },
+                { id: 'Marykat', name: 'Ноктюрн' },
+                { id: 'Emin',    name: 'Хагалл' },
+                { id: 'Mi',      name: 'Буреверса' }
+            ];
 
-        window.addEventListener('load', () => {
-            audio.autoplay = true;
-            audio.load();
-            audio.play().catch(() => {});
-            btn.textContent = '🔊';
-        });
+            const card = document.getElementById('interactive-card');
+            const cardFront = card.querySelector('.card-front');
+            const characterNameElement = document.getElementById('character-name');
+            
+            let isFlipped = false;
+            let isAnimating = false;
+            let currentCharacterIndex = -1;
 
-        btn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play();
-                btn.textContent = '🔊';
-            } else {
-                audio.pause();
-                btn.textContent = '🔇';
-            }
-        });
+            card.addEventListener('click', () => {
+                if (isAnimating) return;
+                isAnimating = true;
+                
+                const animationDuration = 1500;
 
-        rulesBtn.addEventListener('click', () => {
-            alert('В разработке');
-        });
-
-        feedbackBtn.addEventListener('click', () => {
-            buildCalendar();
-            feedbackModal.style.display = 'flex';
-        });
-
-        closeFeedback.addEventListener('click', () => {
-            feedbackModal.style.display = 'none';
-        });
-
-        feedbackModal.addEventListener('click', (e) => {
-            if (e.target === feedbackModal) {
-                feedbackModal.style.display = 'none';
-            }
-        });
-
-        function buildCalendar() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth();
-            const firstDay = new Date(year, month, 1).getDay();
-            const lastDate = new Date(year, month + 1, 0).getDate();
-            const weekdays = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
-
-            let html = '<table class="calendar"><thead><tr>';
-            weekdays.forEach(d => html += `<th>${d}</th>`);
-            html += '</tr></thead><tbody><tr>';
-
-            let dayOfWeek = (firstDay + 6) % 7; // shift to Monday start
-            for (let i = 0; i < dayOfWeek; i++) {
-                html += '<td></td>';
-            }
-            for (let date = 1; date <= lastDate; date++) {
-                const fullDate = `${year}-${String(month+1).padStart(2,'0')}-${String(date).padStart(2,'0')}`;
-                html += `<td data-date="${fullDate}">${date}</td>`;
-                dayOfWeek++;
-                if (dayOfWeek === 7 && date !== lastDate) {
-                    html += '</tr><tr>';
-                    dayOfWeek = 0;
-                }
-            }
-            while (dayOfWeek > 0 && dayOfWeek < 7) {
-                html += '<td></td>';
-                dayOfWeek++;
-                if (dayOfWeek === 7) break;
-            }
-            html += '</tr></tbody></table>';
-            calendarContainer.innerHTML = html;
-            calendarContainer.querySelectorAll('td[data-date]').forEach(td => {
-                td.addEventListener('click', () => {
-                    const date = td.getAttribute('data-date');
-                    if (selectedDates.has(date)) {
-                        selectedDates.delete(date);
-                        td.classList.remove('selected');
-                    } else {
-                        selectedDates.add(date);
-                        td.classList.add('selected');
-                    }
-                });
-            });
-        }
-
-        document.getElementById('submit-feedback').addEventListener('click', async () => {
-            const name = document.getElementById('player-name').value.trim();
-            if (!name || selectedDates.size === 0) {
-                alert('Укажите имя и отметьте даты.');
-                return;
-            }
-            const dates = Array.from(selectedDates).join(', ');
-            const status = document.getElementById('feedback-status');
-            status.textContent = 'Отправка...';
-            const data = new URLSearchParams();
-            data.append('name', name);
-            data.append('dates', dates);
-            try {
-                const res = await fetch(scriptURL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: data
-                });
-                if (res.ok) {
-                    status.textContent = 'Данные отправлены!';
-                    selectedDates.clear();
-                    calendarContainer.querySelectorAll('td.selected').forEach(td => td.classList.remove('selected'));
-                    document.getElementById('player-name').value = '';
-                    feedbackModal.style.display = 'none';
+                if (isFlipped) {
+                    characterNameElement.classList.remove('visible');
+                    card.classList.remove('is-flipped');
+                    isFlipped = false;
                 } else {
-                    status.textContent = 'Ошибка отправки.';
+                    currentCharacterIndex = (currentCharacterIndex + 1) % characters.length;
+                    const nextCharacter = characters[currentCharacterIndex];
+
+                    cardFront.style.backgroundImage = `url('static/${nextCharacter.id}.jpg')`;
+                    characterNameElement.textContent = nextCharacter.name;
+                    
+                    card.classList.add('is-flipped');
+                    isFlipped = true;
+
+                    setTimeout(() => {
+                        characterNameElement.classList.add('visible');
+                    }, animationDuration);
                 }
-            } catch (e) {
-                status.textContent = 'Ошибка сети.';
-            }
+
+                setTimeout(() => {
+                    isAnimating = false;
+                }, animationDuration);
+            });
         });
-
-
     </script>
 </body>
 </html>
