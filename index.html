@@ -129,23 +129,6 @@
             border: 1px solid #6e5831; margin-top: 10px;
         }
         
-        /* --- АДАПТИВНОСТЬ --- */
-        @media (min-width: 769px) { .card { width: 330px; height: 472px; } }
-        @media (max-width: 840px) { .prologue, .features-section, .site-footer { padding: 20px; } }
-        @media (max-width: 600px) {
-            body { padding: 15px; }
-            .prologue h1, .features-section .section-title { font-size: 2rem; }
-            .prologue h2 { font-size: 1.2rem; }
-            .prologue p, .prologue li, .features-section p { font-size: 1rem; }
-            .features-section h4 { font-size: 1.3rem; }
-            .card { width: 240px; height: 343px; }
-            .character-name { font-size: 2rem; height: 35px; }
-            .site-footer h3 { font-size: 1.5rem; }
-            .site-footer p { font-size: 1rem; }
-            .site-footer .final-words { font-size: 1.1rem; }
-            .top-nav { position: static; width: 100%; text-align: center; margin-bottom: 10px; }
-            .nav-button { padding: 8px 16px; font-size: 0.9rem; }
-        }
         /* --- Навигационная кнопка --- */
         .top-nav {
             position: absolute; top: 20px; right: 20px; z-index: 1000;
@@ -167,6 +150,40 @@
             color: #1a1a1a;
             box-shadow: 0 0 25px rgba(249, 215, 126, 0.7);
             transform: translateY(-3px);
+        }
+
+        /* --- АДАПТИВНОСТЬ --- */
+        @media (min-width: 769px) { .card { width: 330px; height: 472px; } }
+        @media (max-width: 840px) { .prologue, .features-section, .site-footer { padding: 20px; } }
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+                display: flex;
+                flex-direction: column;
+            }
+            .top-nav {
+                order: -1; /* Move to top */
+                position: static;
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .nav-button {
+                display: block;
+                text-align: center;
+                padding: 12px;
+                font-size: 1.1rem;
+            }
+            .site-header { order: 0; } /* Comes after nav */
+
+            .prologue h1, .features-section .section-title { font-size: 2rem; }
+            .prologue h2 { font-size: 1.2rem; }
+            .prologue p, .prologue li, .features-section p { font-size: 1rem; }
+            .features-section h4 { font-size: 1.3rem; }
+            .card { width: 100%; max-width: 280px; height: auto; aspect-ratio: 280 / 400; }
+            .character-name { font-size: 2rem; height: 35px; }
+            .site-footer h3 { font-size: 1.5rem; }
+            .site-footer p { font-size: 1rem; }
+            .site-footer .final-words { font-size: 1.1rem; }
         }
 
     </style>

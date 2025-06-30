@@ -55,6 +55,7 @@
             align-items: center;
             border: 1px solid #8c734b;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
         .game-header:hover {
             background-color: rgba(200, 164, 92, 0.2);
@@ -73,7 +74,7 @@
         .game-details {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.7s cubic-bezier(0.22, 1, 0.36, 1), padding 0.5s ease-out;
+            transition: max-height 1s cubic-bezier(0.22, 1, 0.36, 1), padding 0.7s ease-out; /* Adjusted transition duration */
             padding: 0 20px;
             border-left: 2px solid #6e5831;
             margin-left: 20px;
@@ -121,14 +122,28 @@
             background-color: rgba(0, 0, 0, 0.2);
             box-shadow: none;
         }
-        .game.active .game-details { max-height: 1000px; /* Adjust as needed */ padding-top: 15px; padding-bottom: 15px; }
-        .game.active .game-details p { opacity: 1; transform: translateY(0); }
-        .game.active .game-details h3 { opacity: 1; transform: translateY(0); }
+        .game.active .game-details { max-height: 5000px; /* Increased max-height for images */ padding-top: 15px; padding-bottom: 15px; }
+        .game.active .game-details p, .game.active .game-details h3, .game.active .game-details .inline-history-image { opacity: 1; transform: translateY(0); }
+
+        .inline-history-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #8c734b;
+            background-color: rgba(0,0,0,0.2);
+            display: block;
+            margin: 25px auto;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.5s ease-out 0.4s, transform 0.5s ease-out 0.4s;
+        }
 
         .back-button-container {
             margin-top: 30px;
             text-align: center;
             animation: fadeInUp 1s ease-out 1s backwards;
+            width: 100%;
+            max-width: 900px;
         }
 
         .back-button {
@@ -160,12 +175,29 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @media (max-width: 768px) {
+            .game-title { font-size: 1.6rem; }
+        }
+
         @media (max-width: 600px) {
             body { padding: 15px; }
             .page-title { font-size: 2.2rem; }
-            .games-container { padding: 20px; }
-            .game-title { font-size: 1.5rem; }
+            .games-container { padding: 15px; }
+            .game-header {
+                padding: 12px 15px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .game-toggle {
+                position: absolute;
+                top: 12px;
+                right: 15px;
+            }
+            .game-title { font-size: 1.4rem; }
+            .game-details { margin-left: 10px; padding: 0 15px; }
             .game-details p { font-size: 1rem; line-height: 1.6; }
+            .back-button { padding: 10px 20px; font-size: 1rem; width: 100%; display: block; }
         }
     </style>
 </head>
@@ -185,12 +217,21 @@
             <div class="game-details">
                 <h3>Возрождение Хаоса</h3>
                 <p>Когда пламя старой власти угасло, и главари культа Хаоса исчезли на тайной миссии, остались лишь мы — младшие, забытые, скрывающиеся в таверне. В роллинге иерархии именно Эйра стала новой главой заведения. Старая бухгалтерия — заплесневевшие бумаги и исписанные страницы — хранила страшные тайны и следы ушедшего правления.</p>
-                <p>Весть о гибели наших лидеров пришла, как удар грома. Орден Порядка объявил культ Хаоса вне закона. Город был прочёсан: они искали нас. Мы знали — долго не продержимся в тени. Нужно было действовать.</p>
+                <img src="static/HS0.jpg" alt="История игры 0" class="inline-history-image">
+                <p>Но внезапно , весть о гибели наших лидеров пришла, как удар грома. Орден Порядка объявил культ Хаоса вне закона. Город был прочёсан: они искали нас. Мы знали — долго не продержимся в тени. Нужно было действовать.</p>
                 <p>Мы спустились в подземелья под таверной. Лабиринт вёл к древнему святилищу, открывавшемуся только командной работой. Последняя дверь признала Ноктюрн — ей досталось письмо от отца и сердце Аегис, покрытое мистическими рунами.</p>
-                <p>Тем временем, таинственное послание сообщило: один из выживших — Баунти Хантер — схвачен и содержится в тюрьме. Мы ворвались в крепость, оставив за собой тела стражей и начальника охраны. Баунти Хантер был полумёртв, пытки и зелье правды сделали своё, но он откусил себе язык, чтобы не выдать остальных. Последней его волей была наводка — путь назад, в таверну.</p>
-                <p>Там нас ждало предательство. Лега, постоянная посетительница, оказалась шпионкой Ордена. Из её рук Порядок узнал о нас. Мы выследили агента, который за нами наблюдал, но было поздно — один из наших сильнейших, рыцарь по прозвищу ЧК, был схвачен и казнён на площади.</p>
-                <p>Оставалась последняя надежда — древний ритуал Возрождения. Сердце Аегис было ключом. Ноктюрн добровольно легла на алтарь. Её сердце вырезали, заменив артефактом, а пятеро из нас отдали кровь. Вместе с ней мы переродились. Рыцари Хаоса восстали вновь.</p>
-                <p>И теперь — наша очередь действовать.</p>
+                <img src="static/HS1.png" alt="История игры 1" class="inline-history-image">
+                <p>Чтобы враг не разузнал о наших планах, крайне важно было хранить всё в секрете, что чуть было не привело в расколу нас самих...</p>
+                <img src="static/HS2.png" alt="История игры 2" class="inline-history-image">
+                <p>Кроме того, до нас дошло таинственное послание: один из выживших культистов — Баунти Хантер — схвачен и содержится в тюрьме. Мы ворвались в тюрьму, оставив за собой тела стражей и начальника охраны. Баунти Хантер был полумёртв, пытки и зелье правды сделали своё, но он откусил себе язык, чтобы не выдать остальных. Мы также узнали про еще одного выжевшего культиста - Рыцаря Хаоса ЧК, которого как раз перед нашим приходом увели на центральную площадь , чтобы казнить.  </p>
+                <img src="static/HS6.png" alt="История игры 3" class="inline-history-image">
+                <p>Мы отправились спасать ЧК прямо на площадь. Действовать открыто у нас бы не вышло, поэтому мы пытались поступить хитро и прикинулись стражником, который поймал культиста. Для этой операции идеально подходили Хагалл и Тириан. </p>
+                <img src="static/HS4.jpg" alt="История игры 3" class="inline-history-image">
+                <p> Но к сожалению, нам не хватило каких то нескольких секунд...и ЧК был убит прямо на наших глазах...у некоторых культистов была идея воскресить ЧК с помощью сердца Аэгис, однако эту идею резко пресекли Эйра и Сиэль.</p>
+                <img src="static/HS3.png" alt="История игры 4" class="inline-history-image">
+                <p> В эту трудную минуту, нам всё же удалось объединиться. Но нас ждало предательство. Лега, постоянная посетительница, оказалась шпионкой Ордена. Из её рук Порядок узнал о нас. Мы выследили агента, который за нами наблюдал, и вышли на след паладина который стоял за всем этим. Однако мы проигрывали Порядку как в силе, так и в количесте. Оставалась последняя надежда — древний ритуал Возрождения. Сердце Аегис было его ключом. Ноктюрн добровольно легла на алтарь. Её сердце вырезали, заменив артефактом, а пятеро из нас отдали кровь. Вместе с ней переродились и мы. Рыцари Хаоса восстали вновь.</p>
+                <img src="static/HS5.png" alt="История игры 5" class="inline-history-image">
+                <p>И теперь — наша очередь действовать. Добыча стала хищником.</p>
             </div>
         </div>
 
