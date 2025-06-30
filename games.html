@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Текущие игры - Культ Хаоса</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Noto+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-image: url('static/background.png');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Noto Serif', serif;
+            color: #f0e6d2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .page-title {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 3rem;
+            text-align: center;
+            text-shadow: 0 0 15px #f9d77e;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+        .games-container {
+            width: 100%;
+            max-width: 900px;
+            background-color: rgba(10, 5, 0, 0.65);
+            border: 1px solid #6e5831;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            animation: fadeInUp 1s ease-out 0.5s backwards;
+        }
+        .game {
+            margin-bottom: 20px;
+        }
+        .game-header {
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #8c734b;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .game-header:hover {
+            background-color: rgba(200, 164, 92, 0.2);
+            box-shadow: 0 0 15px rgba(249, 215, 126, 0.4);
+        }
+        .game-title {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.8rem;
+            color: #e4b967;
+            text-shadow: 0 0 8px #f9d77e;
+        }
+        .game-toggle {
+            font-size: 2rem;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .game-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.22, 1, 0.36, 1), padding 0.5s ease-out;
+            padding: 0 20px;
+            border-left: 2px solid #6e5831;
+            margin-left: 20px;
+        }
+        .game-details p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+            padding-top: 20px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.5s ease-out 0.2s, transform 0.5s ease-out 0.2s;
+        }
+        .game.active .game-toggle { transform: rotate(45deg); }
+        .game.active .game-details { max-height: 1000px; /* Adjust as needed */ }
+        .game.active .game-details p { opacity: 1; transform: translateY(0); }
+
+        .back-button-container {
+            margin-top: 30px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out 1s backwards;
+        }
+
+        .back-button {
+            background-color: rgba(10, 5, 0, 0.7);
+            border: 2px solid #c8a45c;
+            color: #f0e6d2;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(249, 215, 126, 0.3);
+        }
+
+        .back-button:hover {
+            background-color: #c8a45c;
+            color: #1a1a1a;
+            box-shadow: 0 0 25px rgba(249, 215, 126, 0.7);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .page-title { font-size: 2.2rem; }
+            .games-container { padding: 20px; }
+            .game-title { font-size: 1.5rem; }
+            .game-details p { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="page-title">Текущие игры</h1>
+
+    <div class="games-container">
+        <div class="game" id="game-1">
+            <div class="game-header">
+                <h2 class="game-title">Культ Хаоса - игра 1</h2>
+                <span class="game-toggle">+</span>
+            </div>
+            <div class="game-details">
+                <p>
+                    Здесь будет подробное описание сюжета для игры "Культ Хаоса - игра 1".
+                    Вы сможете добавить сюда любой текст, который захотите.
+                    Например, краткое содержание предыдущих сессий, важные NPC, ключевые локации и текущие цели группы.
+                </p>
+            </div>
+        </div>
+        <!-- Сюда можно будет добавлять другие игры -->
+    </div>
+
+    <div class="back-button-container">
+        <a href="index.html" class="back-button">На главную</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gameHeader = document.querySelector('.game-header');
+            gameHeader.addEventListener('click', () => {
+                const game = gameHeader.closest('.game');
+                game.classList.toggle('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
