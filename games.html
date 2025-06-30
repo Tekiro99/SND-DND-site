@@ -88,7 +88,27 @@
             transition: opacity 0.5s ease-out 0.2s, transform 0.5s ease-out 0.2s;
         }
         .game.active .game-toggle { transform: rotate(45deg); }
-        .game.active .game-details { max-height: 1000px; /* Adjust as needed */ }
+        .game-date {
+            font-family: 'Noto Serif', serif;
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #bda06e;
+            margin-top: 5px;
+        }
+        .game-header.locked {
+            cursor: not-allowed;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-color: #5a4a2a;
+        }
+        .game-header.locked .game-title {
+            color: #8c734b;
+            text-shadow: none;
+        }
+        .game-header.locked:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+            box-shadow: none;
+        }
+        .game.active .game-details { max-height: 1000px; /* Adjust as needed */ padding-top: 15px; padding-bottom: 15px; }
         .game.active .game-details p { opacity: 1; transform: translateY(0); }
 
         .back-button-container {
@@ -141,18 +161,26 @@
     <div class="games-container">
         <div class="game" id="game-1">
             <div class="game-header">
-                <h2 class="game-title">Культ Хаоса - игра 1</h2>
+                <div>
+                    <h2 class="game-title">Культ Хаоса - игра 1</h2>
+                    <div class="game-date">26.06.2025</div>
+                </div>
                 <span class="game-toggle">+</span>
             </div>
             <div class="game-details">
                 <p>
-                    Здесь будет подробное описание сюжета для игры "Культ Хаоса - игра 1".
-                    Вы сможете добавить сюда любой текст, который захотите.
-                    Например, краткое содержание предыдущих сессий, важные NPC, ключевые локации и текущие цели группы.
+                    [ТЕКСТ ИГРЫ]
                 </p>
             </div>
         </div>
-        <!-- Сюда можно будет добавлять другие игры -->
+
+        <div class="game" id="game-2">
+            <div class="game-header locked">
+                 <h2 class="game-title">Культ Хаоса - игра 2</h2>
+                 <span class="game-toggle">🔒</span>
+            </div>
+            <!-- Детали для второй игры пока скрыты -->
+        </div>
     </div>
 
     <div class="back-button-container">
@@ -161,10 +189,16 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const gameHeader = document.querySelector('.game-header');
-            gameHeader.addEventListener('click', () => {
-                const game = gameHeader.closest('.game');
-                game.classList.toggle('active');
+            const gameHeaders = document.querySelectorAll('.game-header');
+
+            gameHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    if (header.classList.contains('locked')) {
+                        return; // Не открывать заблокированные игры
+                    }
+                    const game = header.closest('.game');
+                    game.classList.toggle('active');
+                });
             });
         });
     </script>
