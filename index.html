@@ -25,7 +25,7 @@
             min-height: 100vh;
             padding: 20px;
             overflow-x: hidden;
-            position: relative; /* Added for d20 positioning */
+            position: relative; /* for positioning absolute elements */
         }
 
         /* --- D20 Dice Styles --- */
@@ -121,7 +121,10 @@
 
         /* --- Шапка сайта --- */
         .site-header {
-            width: 100%; max-width: 500px; margin-bottom: 30px;
+            position: relative; /* for d20 positioning */
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 30px;
         }
         .site-header img {
             width: 100%; height: auto; border-radius: 10px; border: 3px solid #c8a45c;
@@ -296,19 +299,18 @@
     </style>
 </head>
 <body>
-    <div class="d20-container" id="d20-container">
-        <img src="static/d20.png" alt="D20 Dice" class="d20-dice" id="d20-dice">
-        <div class="d20-glow" id="d20-glow"></div>
-        <div class="dice-result" id="dice-result"></div>
-    </div>
-
     <div class="top-nav">
         <a href="games.html" class="nav-button">Текущие игры</a>
         <a href="characters.html" class="nav-button">Персонажи</a>
     </div>
 
     <header class="site-header">
-        <img src="static/top.jpg" alt="Фэнтези мир">
+        <img src="static/top.jpg" alt="Фэнтези мир" id="top-image">
+        <div class="d20-container" id="d20-container">
+            <img src="static/d20.png" alt="D20 Dice" class="d20-dice" id="d20-dice">
+            <div class="d20-glow" id="d20-glow"></div>
+            <div class="dice-result" id="dice-result"></div>
+        </div>
     </header>
 
     <!-- ВОССТАНОВЛЕННЫЙ БЛОК -->
