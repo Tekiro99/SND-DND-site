@@ -132,6 +132,7 @@
         /* --- Навигационная кнопка --- */
         .top-nav {
             position: absolute; top: 20px; right: 20px; z-index: 1000;
+            display: flex; gap: 10px;
         }
         .nav-button {
             background-color: rgba(10, 5, 0, 0.7);
@@ -172,6 +173,8 @@
                 text-align: center;
                 padding: 12px;
                 font-size: 1.1rem;
+                width: 100%;
+                margin-bottom: 10px;
             }
             .site-header { order: 0; } /* Comes after nav */
 
@@ -193,6 +196,7 @@
 
     <div class="top-nav">
         <a href="games.html" class="nav-button">Текущие игры</a>
+        <a href="characters.html" class="nav-button">Персонажи</a>
     </div>
 
     <header class="site-header">
