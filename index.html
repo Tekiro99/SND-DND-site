@@ -42,6 +42,7 @@
             cursor: pointer;
             animation: rotate 15s linear infinite;
             touch-action: manipulation; /* Prevent default touch actions */
+            -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile tap */
         }
 
         .d20-dice {
@@ -49,7 +50,6 @@
             height: 100%;
             object-fit: contain;
             transition: opacity 0.3s ease-in-out;
-            -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile tap */
             touch-action: manipulation; /* Prevent default touch actions */
         }
 
@@ -89,6 +89,9 @@
 
         .dice-result.critical-text {
             font-size: 2rem; /* Smaller font size for critical text */
+            white-space: normal; /* Allow text to wrap */
+            word-break: break-word; /* Break long words */
+            padding: 0 5px; /* Add some padding to prevent text from touching edges */
         }
 
         .dice-result.visible {
