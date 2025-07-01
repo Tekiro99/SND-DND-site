@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Персонажи - Культ Хаоса</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Noto+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-image: url('static/background.png');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Noto Serif', serif;
+            color: #f0e6d2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .top-nav {
+            position: absolute; top: 20px; right: 20px; z-index: 1000;
+            display: flex; gap: 10px;
+        }
+        .nav-button {
+            background-color: rgba(10, 5, 0, 0.7);
+            border: 2px solid #c8a45c;
+            color: #f0e6d2;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(249, 215, 126, 0.3);
+        }
+        .nav-button:hover {
+            background-color: #c8a45c;
+            color: #1a1a1a;
+            box-shadow: 0 0 25px rgba(249, 215, 126, 0.7);
+            transform: translateY(-3px);
+        }
+        h1.page-title {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 2.5rem;
+            text-shadow: 0 0 15px #f9d77e;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .characters-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+        }
+        .character-card {
+            width: 220px;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .character-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #c8a45c;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .character-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(249,215,126,0.4);
+        }
+        .character-name {
+            margin-top: 10px;
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.3rem;
+            text-shadow: 0 0 8px #f9d77e;
+        }
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background-color: rgba(10,5,0,0.85);
+            border: 1px solid #6e5831;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 20px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.6);
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+        }
+        .modal-title {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px #f9d77e;
+        }
+        .modal-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #6e5831;
+            margin-bottom: 15px;
+        }
+        .modal-section {
+            margin-bottom: 20px;
+        }
+        .modal-section h3 {
+            font-family: 'Cinzel Decorative', cursive;
+            color: #c8a45c;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .modal-section p {
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: justify;
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #f0e6d2;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 600px) {
+            body { padding: 15px; }
+            .top-nav { position: static; width: 100%; margin-bottom: 20px; justify-content: center; }
+            .nav-button { display: block; text-align: center; width: 100%; margin-bottom: 10px; }
+            .characters-grid { gap: 15px; }
+            .character-card { width: 45%; }
+            .character-card img { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="index.html" class="nav-button">На главную</a>
+    </div>
+    <h1 class="page-title">Персонажи</h1>
+    <div class="characters-grid" id="characters-grid"></div>
+
+    <div class="modal" id="character-modal">
+        <div class="modal-content">
+            <button class="modal-close">✖</button>
+            <h2 class="modal-title"></h2>
+            <img src="" alt="" class="modal-image">
+            <div class="modal-section">
+                <h3>История</h3>
+                <p class="modal-history"></p>
+            </div>
+            <div class="modal-section">
+                <h3>Проклятие</h3>
+                <p class="modal-curse"></p>
+            </div>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const characters = [
+            { id: 'Vagon', name: 'Тириан',
+              history: `Меня зовут Тириан. Когда-то я был простым эльфом. Пока моё тело не стало сосудом для странного ритуала. В ритуале что-то прошло не так — или наоборот, слишком правильно. Во мне должно было возродиться… нечто. Оно не назвало себя. Оно не говорит. Оно просто жрёт всё, что соткано из магии. Теперь зелья на меня не действуют. Заклинания поглощаются. Благословения - завтрак для него. Меня нельзя исцелить, нельзя проклясть, нельзя зачаровать. Я — черная дыра в плетении магии. Я не знаю, сколько ещё выдержу. Каждый раз, когда я чувствую, как оно жрёт — я думаю: в этот раз точно последний.`,
+              curse: `Ты стал жертвой древнего ритуала. Теперь внутри тебя живёт нечто — древнее существо из времен, когда магия только рождалась. Оно не разговаривает, не двигается, не проявляет воли. Но оно поглощает. Каждый проблеск магической силы, направленный на тебя, исчезает без следа. Иммунитет к магии: Вы не можете быть целью никаких заклинаний, включая лечение и благословения. Игнорирование магических предметов: любые предметы не действуют на вас. Рассеивание зон: дружественные заклинания не касаются вас. Антимагическая аура: вы можете поглотить заклинание не выше 2-го уровня полностью, более сильные — частично.` },
+            { id: 'Nara', name: 'Эйра',
+              history: `Меня зовут Эйра, что с древнего языка значит снег. Ещё ребёнком меня похитили и продали колдунье, которая питалась юностью девочек. Я узнала её тайну и стала делать то же самое. Теперь, чтобы оставаться молодой, мне необходимо убивать и проводить кровавые ритуалы. Без них я снова превращаюсь в старуху.`,
+              curse: `Каждые 24 часа ты должна провести ритуал омоложения, используя сердце и кровь жертвы. Без ритуала ты превращаешься в дряхлую старуху, получаешь помехи на проверки Харизмы, сниженную скорость и не можешь восстанавливаться магией. Успешный ритуал даёт временное преимущество и 1к10 временных хитов.` },
+            { id: 'Tosha', name: 'Экко',
+              history: `Я бывший страж рощи. Меня отравили собственные сослуживцы, и я позволил им украсть артефакт. В наказание владыка рощи обрёк меня никогда не смыкать глаз. Теперь я бродяга без сна, избавление приносит лишь чудо-чай, который хоть немного снимает усталость. Культ Хаоса не предложил исцеление, но дал шанс использовать моё проклятие.`,
+              curse: `Ты не можешь спать естественным или магическим образом. Ты всегда видишь, даже с закрытыми глазами. Постоянная усталость накапливается каждые 1к4 часа, если не выпить чудо-чай. Короткий отдых с чаем снимает 1 уровень усталости.` },
+            { id: 'Yulya', name: 'Сиэль',
+              history: `Я — дочь проклятой женщины-тифлинга. С детства вокруг меня проводили священные ритуалы, пытаясь изгнать тьму. Мир был нем, пока в семь лет я не услышала шёпот изнутри. Голоса не умолкали. Сделка с дьяволом заставила меня сжечь храм, и только тогда я начала понимать этих сущностей.`,
+              curse: `Ты полностью глуха к внешним звукам, но слышишь голоса из Аверно. Ты можешь прислушиваться к ним ради подсказок, но платишь 1к4 психического урона. Спасброски против звуковых эффектов ты автоматически проходишь.` },
+            { id: 'Elvina', name: 'Селария',
+              history: `С рождения моё тело покрыто таинственными рунами. Сила в них нестабильна, и клан боялся меня как предвестницу катастрофы. Родители спасли меня бегством, и теперь культ Хаоса пытается раскрыть мою мощь.`,
+              curse: `При использовании магии брось д20. На 1–15 заклинание перехватывает руна и происходит случайный эффект. На 16–20 заклинание срабатывает, но руна добавляет побочный эффект. После каждого применения на теле остаётся ожог.` },
+            { id: 'Marykat', name: 'Ноктюрн',
+              history: `Я дочь Вальтера Маледикта, скрытая от мира будущая глава культа. Меня отправили в храм Тира, чтобы я познала Порядок и смогла уничтожить его. Теперь я собираю кольца Рыцарей Хаоса и готовлюсь возглавить культ.`,
+              curse: `Чтобы занять трон, тебе нужно надеть одно из Одиннадцати Колец Рыцарей Хаоса и собрать путь класса. Затем заменить сердце на Сердце Аэгис в ритуале с участием пяти культистов.` },
+            { id: 'Emin', name: 'Хагалл',
+              history: `Я тролль-расхититель гробниц. Однажды я нашёл древнюю монету, которая прилипла ко мне и открывает любые замки. Она шепчет мне и манит дальше. Если я пытаюсь бросить её снова, я плачу силой и жизнью.`,
+              curse: `Монета может открыть любой замок при броске. Каждый успешный бросок даёт шанс получить лут, но как только выпадет "Нет", ты теряешь модификаторы характеристик. Они возвращаются только после долгого отдыха и раскаяния.` },
+            { id: 'Mi', name: 'Буреверса',
+              history: `Когда-то я была медведем-защитником леса, но злой друид превратил меня в человека. Культ Хаоса дал мне чёрный шар, позволяющий ночью вновь становиться медведем, но днём я подвластна его воле. Лишь волшебная курочка CFC возвращает контроль.`,
+              curse: `Ты медведь в человеческом теле. Все характеристики действуют с помехой, и ты быстро устаёшь, если не ешь каждые 1к4 часа. Днём твои действия определяет магический шар. Волшебная курочка позволяет полностью контролировать тело на одну сцену.` }
+        ];
+
+        const grid = document.getElementById('characters-grid');
+        characters.forEach(ch => {
+            const card = document.createElement('div');
+            card.className = 'character-card';
+            card.innerHTML = `<img src="static/${ch.id}.jpg" alt="${ch.name}"><div class="character-name">${ch.name}</div>`;
+            card.addEventListener('click', () => openModal(ch));
+            grid.appendChild(card);
+        });
+
+        const modal = document.getElementById('character-modal');
+        const modalTitle = modal.querySelector('.modal-title');
+        const modalImage = modal.querySelector('.modal-image');
+        const modalHistory = modal.querySelector('.modal-history');
+        const modalCurse = modal.querySelector('.modal-curse');
+
+        function openModal(ch) {
+            modalTitle.textContent = ch.name;
+            modalImage.src = `static/${ch.id}.jpg`;
+            modalImage.alt = ch.name;
+            modalHistory.textContent = ch.history;
+            modalCurse.textContent = ch.curse;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+        modal.querySelector('.modal-close').addEventListener('click', closeModal);
+        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    });
+</script>
+</body>
+</html>
