@@ -153,6 +153,45 @@
             transform: translateY(-3px);
         }
 
+        /* --- Движущийся D20 --- */
+        #floating-dice {
+            position: fixed;
+            width: 70px;
+            height: 70px;
+            top: 0;
+            left: 0;
+            z-index: 50;
+            pointer-events: auto;
+        }
+        #floating-dice svg {
+            width: 100%;
+            height: 100%;
+            fill: #c8a45c;
+            stroke: #6e5831;
+            stroke-width: 4;
+        }
+        #floating-dice.spinning svg {
+            animation: dice-spin 1s linear;
+        }
+        @keyframes dice-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        #floating-dice .dice-result {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #f9d77e;
+            font-size: 1.4rem;
+            opacity: 0;
+            transition: opacity 1s;
+            pointer-events: none;
+        }
+        #floating-dice .dice-result.visible {
+            opacity: 1;
+        }
+
         /* --- АДАПТИВНОСТЬ --- */
         @media (min-width: 769px) { .card { width: 330px; height: 472px; } }
         @media (max-width: 840px) { .prologue, .features-section, .site-footer { padding: 20px; } }
@@ -193,6 +232,13 @@
     </style>
 </head>
 <body>
+
+    <div id="floating-dice">
+        <svg viewBox="0 0 100 100">
+            <polygon points="95.0,50.0 92.8,63.9 86.4,76.5 76.5,86.4 63.9,92.8 50.0,95.0 36.1,92.8 23.5,86.4 13.6,76.5 7.2,63.9 5.0,50.0 7.2,36.1 13.6,23.5 23.5,13.6 36.1,7.2 50.0,5.0 63.9,7.2 76.5,13.6 86.4,23.5 92.8,36.1"/>
+        </svg>
+        <div class="dice-result" id="dice-result"></div>
+    </div>
 
     <div class="top-nav">
         <a href="games.html" class="nav-button">Текущие игры</a>
@@ -258,7 +304,37 @@
             const card = document.getElementById('interactive-card');
             const cardFront = card.querySelector('.card-front');
             const characterNameElement = document.getElementById('character-name');
-            
+
+            const dice = document.getElementById('floating-dice');
+            const diceResult = document.getElementById('dice-result');
+            let dx = (Math.random() * 0.3 + 0.1) * (Math.random() < 0.5 ? -1 : 1);
+            let dy = (Math.random() * 0.3 + 0.1) * (Math.random() < 0.5 ? -1 : 1);
+            let x = Math.random() * (window.innerWidth - dice.offsetWidth);
+            let y = Math.random() * (window.innerHeight - dice.offsetHeight);
+
+            function moveDice() {
+                x += dx;
+                y += dy;
+                const maxX = window.innerWidth - dice.offsetWidth;
+                const maxY = window.innerHeight - dice.offsetHeight;
+                if (x <= 0 || x >= maxX) dx *= -1;
+                if (y <= 0 || y >= maxY) dy *= -1;
+                dice.style.transform = `translate(${x}px, ${y}px)`;
+                requestAnimationFrame(moveDice);
+            }
+            moveDice();
+
+            dice.addEventListener('click', () => {
+                dice.classList.add('spinning');
+                const roll = Math.floor(Math.random() * 20) + 1;
+                setTimeout(() => {
+                    diceResult.textContent = roll;
+                    diceResult.classList.add('visible');
+                    setTimeout(() => diceResult.classList.remove('visible'), 3000);
+                }, 300);
+                setTimeout(() => dice.classList.remove('spinning'), 1000);
+            });
+
             let isFlipped = false, isAnimating = false, currentCharacterIndex = -1;
 
             card.addEventListener('click', () => {
