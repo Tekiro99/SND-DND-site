@@ -63,7 +63,7 @@
             width: 220px;
             cursor: pointer;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
         }
         .character-card img {
             width: 100%;
@@ -72,10 +72,13 @@
             border-radius: 10px;
             border: 2px solid #c8a45c;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: box-shadow 0.3s ease;
         }
         .character-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 8px 20px rgba(249,215,126,0.4);
+        }
+        .character-card:hover img {
+            box-shadow: 0 0 25px rgba(249,215,126,0.7), 0 0 45px rgba(249,215,126,0.5);
         }
         .character-name {
             margin-top: 10px;
@@ -103,6 +106,13 @@
             box-shadow: 0 0 25px rgba(0,0,0,0.6);
             position: relative;
             animation: fadeIn 0.5s ease-out;
+        }
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-text {
+            flex: 1;
         }
         .modal-title {
             font-family: 'Cinzel Decorative', cursive;
@@ -147,6 +157,19 @@
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @media (min-width: 769px) {
+            .modal-content {
+                max-width: 900px;
+            }
+            .modal-body {
+                flex-direction: row;
+                gap: 20px;
+            }
+            .modal-image {
+                width: 40%;
+                max-width: 350px;
+            }
+        }
         @media (max-width: 600px) {
             body { padding: 15px; }
             .top-nav { position: static; width: 100%; margin-bottom: 20px; justify-content: center; }
@@ -168,14 +191,18 @@
         <div class="modal-content">
             <button class="modal-close">✖</button>
             <h2 class="modal-title"></h2>
-            <img src="" alt="" class="modal-image">
-            <div class="modal-section">
-                <h3>История</h3>
-                <p class="modal-history"></p>
-            </div>
-            <div class="modal-section">
-                <h3>Проклятие</h3>
-                <p class="modal-curse"></p>
+            <div class="modal-body">
+                <img src="" alt="" class="modal-image">
+                <div class="modal-text">
+                    <div class="modal-section">
+                        <h3>История</h3>
+                        <p class="modal-history"></p>
+                    </div>
+                    <div class="modal-section">
+                        <h3>Проклятие</h3>
+                        <p class="modal-curse"></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
