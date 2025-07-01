@@ -25,6 +25,80 @@
             min-height: 100vh;
             padding: 20px;
             overflow-x: hidden;
+            position: relative; /* Added for d20 positioning */
+        }
+
+        /* --- D20 Dice Styles --- */
+        .d20-container {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 85px; /* Adjust size as needed */
+            height: 85px; /* Adjust size as needed */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999; /* Ensure it's above other content */
+            cursor: pointer;
+            animation: rotate 15s linear infinite;
+        }
+
+        .d20-dice {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .d20-glow {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(255, 223, 150, 0.6) 0%, rgba(255, 223, 150, 0) 70%);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.5s ease-out;
+        }
+
+        .d20-glow.active {
+            opacity: 1;
+            transform: scale(1);
+            animation: d20-radiate-glow 0.8s ease-out forwards;
+        }
+
+        .dice-result {
+            position: absolute;
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 4rem;
+            font-weight: bold;
+            color: #f9d77e;
+            text-shadow: 0 0 15px #f9d77e, 0 0 25px rgba(249, 215, 126, 0.7);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none; /* Allow clicks to pass through */
+        }
+
+        .dice-result.visible {
+            opacity: 1;
+        }
+
+        /* --- Keyframe Animations --- */
+        @keyframes float {
+            0% { left: 5%; }
+            50% { left: 95%; }
+            100% { left: 5%; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes d20-radiate-glow {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.2); opacity: 0; }
         }
 
         /* --- Шапка сайта --- */
@@ -193,6 +267,11 @@
     </style>
 </head>
 <body>
+    <div class="d20-container" id="d20-container">
+        <img src="static/d20.png" alt="D20 Dice" class="d20-dice" id="d20-dice">
+        <div class="d20-glow" id="d20-glow"></div>
+    </div>
+    <div class="dice-result" id="dice-result"></div>
 
     <div class="top-nav">
         <a href="games.html" class="nav-button">Текущие игры</a>
@@ -245,7 +324,6 @@
     </section>
     
     <script>
-        // JavaScript остается без изменений
         document.addEventListener('DOMContentLoaded', () => {
             const characters = [
                 { id: 'Vagon',   name: 'Тириан' }, { id: 'Nara',    name: 'Эйра' },
@@ -287,6 +365,51 @@
                     }, animationDuration);
                 }
                 setTimeout(() => { isAnimating = false; }, animationDuration);
+            });
+
+            // D20 Dice Logic
+            const d20Container = document.getElementById('d20-container');
+            const d20Dice = document.getElementById('d20-dice');
+            const d20Glow = document.getElementById('d20-glow');
+            const diceResult = document.getElementById('dice-result');
+
+            d20Container.addEventListener('click', (event) => {
+                if (d20Dice.style.opacity === '0') return; // Prevent multiple clicks during animation
+
+                const clickX = event.clientX;
+                const clickY = event.clientY;
+
+                // Hide dice, show glow
+                d20Dice.style.opacity = '0';
+                d20Glow.classList.add('active');
+
+                // Random number generation (1-20)
+                const roll = Math.floor(Math.random() * 20) + 1;
+                let displayText = roll;
+                if (roll === 1) {
+                    displayText = 'КРИТИЧЕСКАЯ НЕУДАЧА';
+                } else if (roll === 20) {
+                    displayText = 'КРИТИЧЕСКАЯ УДАЧА';
+                }
+                diceResult.textContent = displayText;
+
+                // Position result at dice location
+                const d20Rect = d20Container.getBoundingClientRect();
+                diceResult.style.left = `${d20Rect.left + d20Rect.width / 2}px`;
+                diceResult.style.top = `${d20Rect.top + d20Rect.height / 2}px`;
+                diceResult.style.transform = 'translate(-50%, -50%)';
+
+                // Show result after glow animation starts
+                setTimeout(() => {
+                    diceResult.classList.add('visible');
+                }, 200); // Short delay to sync with glow
+
+                // Hide result and show dice again after 3 seconds
+                setTimeout(() => {
+                    diceResult.classList.remove('visible');
+                    d20Glow.classList.remove('active');
+                    d20Dice.style.opacity = '1';
+                }, 3000);
             });
         });
     </script>
