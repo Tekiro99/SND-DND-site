@@ -147,6 +147,10 @@
             animation: fadeInUp 1s ease-out 1s backwards;
             width: 100%;
             max-width: 900px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .back-button {
@@ -160,6 +164,8 @@
             font-size: 1.1rem;
             transition: all 0.3s ease;
             box-shadow: 0 0 15px rgba(249, 215, 126, 0.3);
+            flex-grow: 1;
+            max-width: 300px;
         }
 
         .back-button:hover {
@@ -252,6 +258,7 @@
 
     <div class="back-button-container">
         <a href="index.html" class="back-button">На главную</a>
+        <a href="materials.html" class="back-button">Известная информация</a>
     </div>
 
     <script>
