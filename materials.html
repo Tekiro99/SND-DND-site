@@ -82,6 +82,11 @@
             border: 1px solid #8c734b;
             margin: 15px auto;
             display: block;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .material-item img:hover {
+            transform: scale(1.03);
         }
         .back-button-container {
             margin-top: 30px;
@@ -137,6 +142,49 @@
             .tab-button.active { border-bottom-color: #f9d77e; }
             .back-button-container { display: flex; flex-direction: column; gap: 15px; }
             .back-button { width: 100%; margin: 0; }
+        }
+
+        /* Modal (Lightbox) Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            padding: 20px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Hide scrollbars */
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .modal-content {
+            display: block;
+            max-width: 95%;
+            max-height: 95vh;
+            transition: transform 0.2s ease-out;
+            cursor: grab;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -201,7 +249,9 @@
         </div>
 
         <div id="maps" class="tab-content">
-            <p style="text-align:center; margin-top: 20px;">Пока нет доступных карт.</p>
+            <div class="material-item">
+                <img src="static/map1.png" alt="Карта 1">
+            </div>
         </div>
 
         <div id="docs" class="tab-content">
@@ -227,6 +277,11 @@
         <a href="games.html" class="back-button">Назад к играм</a>
     </div>
 
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
     <script>
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
@@ -241,6 +296,80 @@
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('imageModal');
+            if (!modal) return;
+
+            const modalImg = document.getElementById('modalImage');
+            const span = document.getElementsByClassName('close')[0];
+
+            document.querySelectorAll('.material-item img').forEach(img => {
+                img.onclick = function() {
+                    modal.style.display = 'flex';
+                    modalImg.src = this.src;
+                    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                }
+            });
+
+            function closeModal() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                // Reset zoom and pan
+                modalImg.style.transform = 'scale(1) translate(0, 0)';
+                scale = 1;
+                translateX = 0;
+                translateY = 0;
+            }
+
+            span.onclick = closeModal;
+
+            let scale = 1;
+            let isDragging = false;
+            let startX, startY, translateX = 0, translateY = 0;
+
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+
+            modal.addEventListener('wheel', function(event) {
+                event.preventDefault();
+                const scaleAmount = 0.1;
+                scale += event.deltaY > 0 ? -scaleAmount : scaleAmount;
+                scale = Math.min(Math.max(0.5, scale), 5); // Min 0.5x, Max 5x zoom
+                modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            });
+
+            modalImg.addEventListener('mousedown', (e) => {
+                if (e.button !== 0) return; // Only main (left) mouse button
+                isDragging = true;
+                startX = e.pageX - translateX;
+                startY = e.pageY - translateY;
+                modalImg.style.cursor = 'grabbing';
+                e.preventDefault();
+            });
+
+            modalImg.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    translateX = e.pageX - startX;
+                    translateY = e.pageY - startY;
+                    modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+                }
+            });
+
+            window.addEventListener('mouseup', (e) => {
+                if (e.button !== 0) return;
+                isDragging = false;
+                modalImg.style.cursor = 'grab';
+            });
+
+             modalImg.addEventListener('mouseleave', () => {
+                isDragging = false;
+                modalImg.style.cursor = 'grab';
+            });
+        });
     </script>
 
 </body>
