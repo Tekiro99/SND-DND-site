@@ -115,6 +115,74 @@
             transform: translateY(-3px);
         }
 
+        }
+
+        /* --- Навигационная кнопка --- */
+        .top-nav {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 100%;
+            text-align: center;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .nav-button {
+            background-color: rgba(10, 5, 0, 0.7);
+            border: 2px solid #c8a45c;
+            color: #f0e6d2;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(249, 215, 126, 0.3);
+            cursor: pointer; /* Add cursor pointer for the button */
+        }
+
+        .nav-button:hover {
+            background-color: #c8a45c;
+            color: #1a1a1a;
+            box-shadow: 0 0 25px rgba(249, 215, 126, 0.7);
+            transform: translateY(-3px);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(10, 5, 0, 0.9);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 8px;
+            border: 1px solid #c8a45c;
+        }
+
+        .dropdown-content a {
+            color: #f0e6d2;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .dropdown-content a:hover {background-color: #c8a45c; color: #1a1a1a;}
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -189,6 +257,18 @@
     </style>
 </head>
 <body>
+
+    <div class="top-nav">
+        <div class="dropdown">
+            <button class="nav-button menu-button">Меню</button>
+            <div class="dropdown-content" id="dropdown-menu">
+                <a href="index.html">На главную</a>
+                <a href="games.html">Текущие игры</a>
+                <a href="characters.html">Персонажи</a>
+                <a href="materials.html">Известная информация</a>
+            </div>
+        </div>
+    </div>
 
     <h1 class="page-title">Известная информация</h1>
 
@@ -273,9 +353,7 @@
         </div>
     </div>
 
-    <div class="back-button-container">
-        <a href="games.html" class="back-button">Назад к играм</a>
-    </div>
+    
 
     <div id="imageModal" class="modal">
         <span class="close">&times;</span>
@@ -368,6 +446,22 @@
              modalImg.addEventListener('mouseleave', () => {
                 isDragging = false;
                 modalImg.style.cursor = 'grab';
+            });
+
+            // Menu button logic
+            const menuButton = document.querySelector('.menu-button');
+            const dropdownContent = document.getElementById('dropdown-menu');
+
+            menuButton.addEventListener('click', (event) => {
+                event.stopPropagation(); // Prevent the window click event from firing immediately
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Close the dropdown if the user clicks outside of it
+            window.addEventListener('click', (event) => {
+                if (!menuButton.contains(event.target)) {
+                    dropdownContent.style.display = 'none';
+                }
             });
         });
     </script>
