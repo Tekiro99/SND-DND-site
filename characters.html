@@ -221,9 +221,16 @@
             }
         }
         @media (max-width: 600px) {
+            .top-nav {
+                position: static; /* Remove absolute positioning */
+                transform: none; /* Reset transform */
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+            h1.page-title {
+                margin-top: 0; /* Reset margin */
+            }
             body { padding: 15px; }
-            .top-nav { position: static; width: 100%; margin-bottom: 20px; justify-content: center; }
-            .nav-button { display: block; text-align: center; width: 100%; margin-bottom: 10px; }
             .characters-grid { gap: 15px; }
             .character-card { width: 45%; }
             .character-card img { height: 200px; }

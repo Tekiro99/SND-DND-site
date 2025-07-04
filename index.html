@@ -295,26 +295,20 @@
         @media (min-width: 769px) { .card { width: 330px; height: 472px; } }
         @media (max-width: 840px) { .prologue, .features-section, .site-footer { padding: 20px; } }
         @media (max-width: 600px) {
+            .top-nav {
+                position: static; /* Remove absolute positioning */
+                transform: none; /* Reset transform */
+                margin-bottom: 20px;
+            }
+            .site-header {
+                margin-top: 0; /* Reset margin */
+                order: 0; /* Comes after nav */
+            }
             body {
                 padding: 15px;
                 display: flex;
                 flex-direction: column;
             }
-            .top-nav {
-                order: -1; /* Move to top */
-                position: static;
-                width: 100%;
-                margin-bottom: 20px;
-            }
-            .nav-button {
-                display: block;
-                text-align: center;
-                padding: 12px;
-                font-size: 1.1rem;
-                width: 100%;
-                margin-bottom: 10px;
-            }
-            .site-header { order: 0; } /* Comes after nav */
 
             .prologue h1, .features-section .section-title { font-size: 2rem; }
             .prologue h2 { font-size: 1.2rem; }

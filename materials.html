@@ -69,24 +69,40 @@
             border-bottom-color: #f9d77e;
         }
         .tab-content {
-            display: none;
+            display: none; /* Hidden by default */
             animation: fadeIn 0.5s ease-in-out;
         }
         .tab-content.active {
-            display: block;
+            display: flex; /* Use Flexbox for alignment */
+            flex-wrap: wrap; /* Allow items to wrap to the next line */
+            justify-content: center; /* Center items */
+            gap: 25px; /* Space between items */
+            padding: 20px;
         }
+
+        .material-item {
+            background: #f0e6d2;
+            border: 1px solid #6e5831;
+            padding: 10px;
+            padding-bottom: 20px; /* Space for a caption-like feel */
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+            transition: all 0.3s ease-in-out;
+            width: auto; /* Let the item size be determined by its content */
+            max-width: 250px; /* Max width for larger items */
+        }
+
+        .material-item:hover {
+            transform: scale(1.05) !important; /* Override JS rotation for hover */
+            z-index: 10;
+            box-shadow: 10px 10px 25px rgba(0,0,0,0.6);
+        }
+
         .material-item img {
             max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            border: 1px solid #8c734b;
-            margin: 15px auto;
+            height: auto; /* Maintain aspect ratio */
             display: block;
             cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .material-item img:hover {
-            transform: scale(1.03);
+            border: 1px solid #8c734b;
         }
         .back-button-container {
             margin-top: 30px;
@@ -290,19 +306,15 @@
 
         <div id="ads" class="tab-content">
             <div class="material-item">
-                <p style="text-align:center; margin-top: 20px;">Объявление 1</p>
                 <img src="static/Обьявление.png" alt="Объявление 1">
             </div>
             <div class="material-item">
-                <p style="text-align:center; margin-top: 20px;">Объявление 2</p>
                 <img src="static/Обьявление2.png" alt="Объявление 2">
             </div>
             <div class="material-item">
-                <p style="text-align:center; margin-top: 20px;">Объявление 3</p>
                 <img src="static/Обьявление3.png" alt="Объявление 3">
             </div>
             <div class="material-item">
-                <p style="text-align:center; margin-top: 20px;">Объявление 4</p>
                 <img src="static/Обьявление4.png" alt="Объявление 4">
             </div>
         </div>
@@ -365,13 +377,13 @@
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
             for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
+                tabcontent[i].classList.remove("active");
             }
             tablinks = document.getElementsByClassName("tab-button");
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
             }
-            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
             evt.currentTarget.className += " active";
         }
 
@@ -446,6 +458,12 @@
              modalImg.addEventListener('mouseleave', () => {
                 isDragging = false;
                 modalImg.style.cursor = 'grab';
+            });
+
+            // Add random rotation to material items
+            document.querySelectorAll('.material-item').forEach(item => {
+                const rotation = Math.random() * 10 - 5; // Random rotation between -5 and 5 degrees
+                item.style.transform = `rotate(${rotation}deg)`;
             });
 
             // Menu button logic
