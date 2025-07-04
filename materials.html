@@ -89,6 +89,11 @@
             transition: all 0.3s ease-in-out;
             width: auto; /* Let the item size be determined by its content */
             max-width: 250px; /* Max width for larger items */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative; /* Needed for absolute positioning of the pin */
         }
 
         .material-item:hover {
@@ -103,6 +108,30 @@
             display: block;
             cursor: pointer;
             border: 1px solid #8c734b;
+        }
+
+        .pin {
+            position: absolute;
+            top: -10px; /* Adjust to make it stick out */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px; /* Size of the pin */
+            height: 20px;
+            background-color: #e74c3c; /* Red color for the pin head */
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            z-index: 11; /* Above the item */
+        }
+
+        .pin::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 2px; /* Pin shaft */
+            height: 15px;
+            background-color: #a0342a;
         }
         .back-button-container {
             margin-top: 30px;
@@ -300,66 +329,82 @@
 
         <div id="gazette" class="tab-content active">
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/Qazeta.png" alt="Газета">
             </div>
         </div>
 
         <div id="ads" class="tab-content">
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/Обьявление.png" alt="Объявление 1">
             </div>
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/Обьявление2.png" alt="Объявление 2">
             </div>
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/Обьявление3.png" alt="Объявление 3">
             </div>
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/Обьявление4.png" alt="Объявление 4">
             </div>
         </div>
 
         <div id="letters" class="tab-content">
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/letter1.png" alt="Письмо 1">
             </div>
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/letter2.png" alt="Письмо 2">
             </div>
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/letter3.png" alt="Письмо 3">
             </div>
         </div>
 
         <div id="reports" class="tab-content">
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/report1.png" alt="Отчет 1">
             </div>
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/report2.png" alt="Отчет 2">
             </div>
         </div>
 
         <div id="maps" class="tab-content">
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/map1.png" alt="Карта 1">
             </div>
         </div>
 
         <div id="docs" class="tab-content">
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/doc1.png" alt="Документ 1">
             </div>
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/doc2.png" alt="Документ 2">
             </div>
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/doc3.png" alt="Документ 3">
             </div>
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/doc4.png" alt="Документ 4">
             </div>
             <div class="material-item">
+                <div class="pin"></div>
                 <img src="static/doc5.png" alt="Документ 5">
             </div>
         </div>
@@ -460,10 +505,12 @@
                 modalImg.style.cursor = 'grab';
             });
 
-            // Add random rotation to material items
+            // Add random rotation and size to material items
             document.querySelectorAll('.material-item').forEach(item => {
                 const rotation = Math.random() * 10 - 5; // Random rotation between -5 and 5 degrees
+                const width = Math.floor(Math.random() * (250 - 150 + 1)) + 150; // Random width between 150px and 250px
                 item.style.transform = `rotate(${rotation}deg)`;
+                item.style.width = `${width}px`;
             });
 
             // Menu button logic
