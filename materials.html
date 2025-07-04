@@ -34,12 +34,14 @@
         .materials-container {
             width: 100%;
             max-width: 900px;
-            background-color: rgba(10, 5, 0, 0.65);
+            background-image: url('static/wood_texture.jpg'); /* Wood texture background */
+            background-size: cover;
+            background-position: center;
             border: 1px solid #6e5831;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 25px rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
+            /* backdrop-filter: blur(4px); */ /* Removed as it conflicts with solid background */
             animation: fadeInUp 1s ease-out 0.5s backwards;
         }
         .tabs {
@@ -112,26 +114,16 @@
 
         .pin {
             position: absolute;
-            top: -10px; /* Adjust to make it stick out */
+            top: -15px; /* Adjust to make it stick out */
             left: 50%;
             transform: translateX(-50%);
-            width: 20px; /* Size of the pin */
-            height: 20px;
-            background-color: #e74c3c; /* Red color for the pin head */
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            width: 30px; /* Size of the nail image */
+            height: 30px;
+            background-image: url('static/nail.png'); /* Nail image */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
             z-index: 11; /* Above the item */
-        }
-
-        .pin::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 2px; /* Pin shaft */
-            height: 15px;
-            background-color: #a0342a;
         }
         .back-button-container {
             margin-top: 30px;
