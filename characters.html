@@ -6,7 +6,7 @@
     <title>Персонажи - Культ Хаоса</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Noto+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Cinzel+Decorative:wght@400;700&family=Noto+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -87,12 +87,22 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
-        h1.page-title {
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 2.5rem;
-            text-shadow: 0 0 15px #f9d77e;
-            margin-top: 70px; /* Add space for the nav menu */
-            margin-bottom: 30px;
+        .character-section {
+            width: 100%;
+            max-width: 1200px;
+            margin-bottom: 40px;
+        }
+        #main-heroes-section {
+            margin-top: 80px;
+        }
+        .section-title {
+            font-family: 'Uncial Antiqua', cursive;
+            font-size: 3rem;
+            color: #f0e6d2;
+            text-shadow: 0 0 12px #f9d77e, 0 0 2px #000, 0 0 2px #000, 0 0 2px #000, 0 0 2px #000; /* Gold shadow + Black stroke */
+            margin-top: 40px;
+            margin-bottom: 20px;
+            width: 100%;
             text-align: center;
         }
         .characters-grid {
@@ -101,7 +111,12 @@
             gap: 20px;
             justify-content: center;
             width: 100%;
-            max-width: 1200px;
+        }
+        .no-characters {
+            text-align: center;
+            width: 100%;
+            font-style: italic;
+            font-size: 1.1rem;
         }
         .character-card {
             width: 220px;
@@ -227,9 +242,6 @@
                 margin-bottom: 20px;
                 justify-content: center;
             }
-            h1.page-title {
-                margin-top: 0; /* Reset margin */
-            }
             body { padding: 15px; }
             .characters-grid { gap: 15px; }
             .character-card { width: 45%; }
@@ -249,8 +261,26 @@
             </div>
         </div>
     </div>
-    <h1 class="page-title">Персонажи</h1>
-    <div class="characters-grid" id="characters-grid"></div>
+
+    <div id="character-sections-wrapper">
+        <div class="character-section" id="main-heroes-section">
+            <h2 class="section-title">Главные Герои</h2>
+            <div class="characters-grid" id="main-heroes-grid"></div>
+        </div>
+
+        <div class="character-section" id="chaos-cult-section">
+            <h2 class="section-title">Культ Хаоса</h2>
+            <div class="characters-grid" id="chaos-cult-grid"></div>
+        </div>
+
+        <div class="character-section" id="order-sect-section">
+            <h2 class="section-title">Орден Порядка</h2>
+            <div class="characters-grid" id="order-sect-grid">
+                <p class="no-characters">Известных персонажей пока нет.</p>
+            </div>
+        </div>
+    </div>
+
 
     <div class="modal" id="character-modal">
         <div class="modal-content">
@@ -263,7 +293,7 @@
                         <h3>История</h3>
                         <p class="modal-history"></p>
                     </div>
-                    <div class="modal-section">
+                    <div class="modal-section modal-curse-section">
                         <h3>Проклятие</h3>
                         <p class="modal-curse"></p>
                     </div>
@@ -274,7 +304,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const characters = [
+        const mainHeroes = [
             { id: 'Vagon', name: 'Тириан',
               history: `Меня зовут Тириан. Когда-то я был простым эльфом. Пока моё тело не стало сосудом для странного ритуала. В ритуале что-то прошло не так — или наоборот, слишком правильно. Во мне должно было возродиться… нечто. Оно не назвало себя. Оно не говорит. Оно просто жрёт всё, что соткано из магии. 
 Теперь зелья на меня не действуют. Заклинания поглощаются. Благословения - завтрак для него. Меня нельзя исцелить, нельзя проклясть, нельзя зачаровать. Я –черная дыра в плетении магии.
@@ -435,30 +465,61 @@
 Курочка CFC: Ножки и крылышки волшебной курицы позволят тебе вернуться в свой истинный облик на некоторое время, отдавая тебе весь контроль над телом и разумом, найди курочку и получишь полный контроль над телом на одну сцену действий или бой.` }
         ];
 
-        const grid = document.getElementById('characters-grid');
-        characters.forEach(ch => {
+        const chaosCult = [
+            { id: 'BH', name: 'Баунти Хантер', history: 'Описание будет добавлено позже.', curse: null, imageFormat: 'png' },
+            { id: 'Chay', name: 'Чай', history: 'Описание будет добавлено позже.', curse: null, imageFormat: 'png' }
+        ];
+
+        function createCharacterCard(character, isMainHero) {
             const card = document.createElement('div');
             card.className = 'character-card';
-            card.innerHTML = `<img src="static/${ch.id}.jpg" alt="${ch.name}"><div class="character-name">${ch.name}</div>`;
-            card.addEventListener('click', () => openModal(ch));
-            grid.appendChild(card);
-        });
+            const imageExtension = character.imageFormat || 'jpg';
+            card.innerHTML = `<img src="static/${character.id}.${imageExtension}" alt="${character.name}" onerror="this.onerror=null;this.src='static/backcard.jpg';"><div class="character-name">${character.name}</div>`;
+            card.addEventListener('click', () => openModal(character, isMainHero));
+            return card;
+        }
+
+        function populateGrid(gridId, characters, isMainHero) {
+            const grid = document.getElementById(gridId);
+            if (!grid) return;
+            if (characters.length === 0) {
+                grid.innerHTML = '<p class="no-characters">Известных персонажей пока нет.</p>';
+            } else {
+                grid.innerHTML = ''; // Clear existing content
+                characters.forEach(ch => {
+                    grid.appendChild(createCharacterCard(ch, isMainHero));
+                });
+            }
+        }
+        
+        populateGrid('main-heroes-grid', mainHeroes, true);
+        populateGrid('chaos-cult-grid', chaosCult, false);
 
         const modal = document.getElementById('character-modal');
         const modalTitle = modal.querySelector('.modal-title');
         const modalImage = modal.querySelector('.modal-image');
         const modalHistory = modal.querySelector('.modal-history');
+        const modalCurseSection = modal.querySelector('.modal-curse-section');
         const modalCurse = modal.querySelector('.modal-curse');
 
-        function openModal(ch) {
+        function openModal(ch, isMainHero) {
             modalTitle.textContent = ch.name;
-            modalImage.src = `static/${ch.id}.jpg`;
+            const imageExtension = ch.imageFormat || 'jpg';
+            modalImage.src = `static/${ch.id}.${imageExtension}`;
             modalImage.alt = ch.name;
             modalHistory.textContent = ch.history;
-            modalCurse.textContent = ch.curse;
+            
+            if (isMainHero && ch.curse) {
+                modalCurse.textContent = ch.curse;
+                modalCurseSection.style.display = 'block';
+            } else {
+                modalCurseSection.style.display = 'none';
+            }
+
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
+
         function closeModal() {
             modal.style.display = 'none';
             document.body.style.overflow = '';
@@ -471,11 +532,10 @@
         const dropdownContent = document.getElementById('dropdown-menu');
 
         menuButton.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent the window click event from firing immediately
+            event.stopPropagation();
             dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
         });
 
-        // Close the dropdown if the user clicks outside of it
         window.addEventListener('click', (event) => {
             if (!menuButton.contains(event.target)) {
                 dropdownContent.style.display = 'none';
