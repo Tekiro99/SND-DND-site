@@ -273,6 +273,11 @@
             <div class="characters-grid" id="chaos-cult-grid"></div>
         </div>
 
+        <div class="character-section" id="chaos-allies-section">
+            <h2 class="section-title">Союзники Хаоса</h2>
+            <div class="characters-grid" id="chaos-allies-grid"></div>
+        </div>
+
         <div class="character-section" id="order-sect-section">
             <h2 class="section-title">Орден Порядка</h2>
             <div class="characters-grid" id="order-sect-grid">
@@ -466,8 +471,12 @@
         ];
 
         const chaosCult = [
-            { id: 'BH', name: 'Баунти Хантер', history: 'Описание будет добавлено позже.', curse: null, imageFormat: 'png' },
-            { id: 'Chay', name: 'Чай', history: 'Описание будет добавлено позже.', curse: null, imageFormat: 'png' }
+            { id: 'BH', name: 'Баунти Хантер', history: 'Описание будет добавлено позже.', curse: null, imageFormat: 'png' }
+        ];
+
+        const chaosAllies = [
+            { id: 'Chay', name: 'Чай', history: 'Описание будет добавлено позже.', curse: null, imageFormat: 'png' },
+            { id: 'Ayra', name: 'Аэлисса', history: 'Таинственный Алхимик, преследуемый Орденом Порядка за связь с Культом Хаоса. Скрывается на вершине Айрис. Там она исследует редкие реагенты в кристальных пещерах, которые могут помочь усилить мощь Культа Хаоса.', curse: null, imageFormat: 'jpg' }
         ];
 
         function createCharacterCard(character, isMainHero) {
@@ -494,6 +503,7 @@
         
         populateGrid('main-heroes-grid', mainHeroes, true);
         populateGrid('chaos-cult-grid', chaosCult, false);
+        populateGrid('chaos-allies-grid', chaosAllies, false);
 
         const modal = document.getElementById('character-modal');
         const modalTitle = modal.querySelector('.modal-title');
