@@ -59,7 +59,6 @@
             transition: all 0.3s ease;
             box-shadow: 0 0 15px rgba(249, 215, 126, 0.3);
             cursor: pointer;
-            /* Add cursor pointer for the button */
         }
 
         .nav-button:hover {
@@ -116,7 +115,6 @@
             font-size: 3rem;
             color: #f0e6d2;
             text-shadow: 0 0 12px #f9d77e, 0 0 2px #000, 0 0 2px #000, 0 0 2px #000, 0 0 2px #000;
-            /* Gold shadow + Black stroke */
             margin-top: 40px;
             margin-bottom: 20px;
             width: 100%;
@@ -143,6 +141,7 @@
             cursor: pointer;
             text-align: center;
             transition: transform 0.3s ease;
+            position: relative;
         }
 
         .character-card img {
@@ -266,6 +265,32 @@
             }
         }
 
+        /* --- KILLED STATUS STYLES --- */
+        .character-card.killed img {
+            filter: grayscale(100%) contrast(1.2);
+            border-color: #5a5a5a;
+        }
+
+        .killed-stamp {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            border: 4px solid #8b0000;
+            color: #8b0000;
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.8rem;
+            font-weight: bold;
+            padding: 5px 10px;
+            text-transform: uppercase;
+            background-color: rgba(20, 0, 0, 0.6);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+            pointer-events: none;
+            z-index: 10;
+            text-shadow: 2px 2px 0px #000;
+            white-space: nowrap;
+        }
+
         @media (min-width: 769px) {
             .modal-content {
                 max-width: 900px;
@@ -288,9 +313,7 @@
         @media (max-width: 600px) {
             .top-nav {
                 position: static;
-                /* Remove absolute positioning */
                 transform: none;
-                /* Reset transform */
                 margin-bottom: 20px;
                 justify-content: center;
             }
@@ -561,8 +584,23 @@
             function createCharacterCard(character, isMainHero) {
                 const card = document.createElement('div');
                 card.className = 'character-card';
+
+                // Check for death status
+                const isDead = character.history.includes('Статус: Убит') || character.history.includes('Статус: Убита');
+                if (isDead) {
+                    card.classList.add('killed');
+                }
+
                 const imageExtension = character.imageFormat || 'jpg';
-                card.innerHTML = `<img src="static/${character.id}.${imageExtension}" alt="${character.name}" onerror="this.onerror=null;this.src='static/backcard.jpg';"><div class="character-name">${character.name}</div>`;
+                let cardContent = `<img src="static/${character.id}.${imageExtension}" alt="${character.name}" onerror="this.onerror=null;this.src='static/backcard.jpg';">`;
+
+                if (isDead) {
+                    cardContent += `<div class="killed-stamp">УБИТ</div>`;
+                }
+
+                cardContent += `<div class="character-name">${character.name}</div>`;
+                card.innerHTML = cardContent;
+
                 card.addEventListener('click', () => openModal(character, isMainHero));
                 return card;
             }
